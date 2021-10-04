@@ -1,5 +1,5 @@
 # FitnessTrac.kr
-an API for our new fitness empire, FitnessTrac.kr, using node, express, and postgresql
+A fullstack application for our new fitness empire, FitnessTrac.kr, using node, express, and postgresql
 
 ## Getting Started
 Install Packages
