@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = "http://fitnesstrac-kr.herokuapp.com/api"
+const BASE_URL = "/api"
 
 const register = async (username, password) => {
     try {
