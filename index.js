@@ -15,9 +15,17 @@ server.use(express.urlencoded({
   extended: true
 }));
 
+const path = require("path");
+server.use(express.static(path.join(__dirname, "build")))
+
+
 const { PORT } = process.env;
 
 server.use('/api', require('./api'));
+
+server.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+})
 
 server.use((err, req, res, next) => {
     res.send(err);
