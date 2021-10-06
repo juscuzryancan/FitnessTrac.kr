@@ -10,8 +10,10 @@ server.use(cors());
 const morgan = require('morgan');
 server.use(morgan('dev'));
 
-const bodyParser = require('body-parser');
-server.use(bodyParser.json());
+server.use(express.json());
+server.use(express.urlencoded({
+  extended: true
+}));
 
 const { PORT } = process.env;
 
