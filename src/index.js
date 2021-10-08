@@ -55,6 +55,14 @@ const App = () => {
       }
   }, [token]);
 
+  // TODO: 
+  // swap each route into a page
+  // this way i can just focus on customizing pages and displaying each individual page
+  // useQuery will replace all of api index functions
+  // as i customize each item i will have to go from inside to outside
+  // this way i can specify each individual component first and then i
+  // can apply the correct css for each component
+
   return (
       <Router>
           <Header 
@@ -62,9 +70,6 @@ const App = () => {
               setToken={setToken}/>
           <Switch>
               <Route exact path='/'>
-                  <h1>
-                      Welcome to FitnessTrackr
-                  </h1>
               </Route>
               <Route exact path='/registration'>
                   <Registration 

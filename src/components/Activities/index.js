@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import {
     getActivities,
     createActivity
-} from '../api'
+} from '../../api'
 
 const Activities = (props) => {
     const { token, activities, setActivities } = props;

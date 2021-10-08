@@ -1,0 +1,47 @@
+nav {
+	font-family: 'Fjalla One', sans-serif;
+	display: flex;
+	justify-content: space-between;
+	font-size: 2.25em;
+}
+
+.links {
+	flex-basis: 25em;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.header__link {
+	text-decoration: none;
+}
+
+.header__link:visited {
+	color: black;
+}
+
+.header__link:hover {
+	border-radius: 10%;
+	background-color: grey;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
+}

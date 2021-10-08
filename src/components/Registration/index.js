@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { 
     register,
     login
-} from '../api';
+} from '../../api';
 
 const Login = (props) => {
     const { token, setToken, setError } = props;
