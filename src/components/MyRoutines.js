@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import {getUserRoutines} from '../../api'
+import {getUserRoutines} from '../api'
 
 const MyRoutines = (props) => {
     const { user, token, activities } = props;

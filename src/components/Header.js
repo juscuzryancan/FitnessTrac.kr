@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './styles.css';
 
 const Header = (props) => {
     const { token, setToken } = props
@@ -12,11 +11,8 @@ const Header = (props) => {
 
     return (
         <nav>
-            <div className='header__title'>
-                FitnessTrac.kr
-            </div>
             <div className='links'> 
-                <Link className='header__link' to="/">Fitness Trackr</Link>
+                <Link className='header__link' to="/">FitnessTrac.kr</Link>
                 <Link className='header__link' to="/routines">Routines</Link>
                 {token && <Link className='header__link' to="/myroutines">My Routines</Link>}
                 <Link className='header__link' to="/activities">Activities</Link>
