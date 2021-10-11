@@ -18,7 +18,7 @@ import {
   Activities,
   Routines,
   MyRoutines
-} from './components'
+} from './Components'
 
 
 const App = () => {
