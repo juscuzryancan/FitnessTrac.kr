@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState, useContext} from 'react';
 import ReactDOM from 'react-dom';
 import {
   BrowserRouter as Router,
@@ -19,6 +19,11 @@ import {
   Routines,
   MyRoutines
 } from './Components'
+
+import UserContext from './Contexts/UserContext';
+
+import { ThemeProvider } from '@mui/material/styles';
+import {default as theme} from './Theme/theme.js'
 
 
 const App = () => {
@@ -65,13 +70,18 @@ const App = () => {
 
   return (
       <Router>
+        <ThemeProvider theme={theme}>
+          {/* you might want to change the name user context and just name it context
+          because since its a small application you'll be able to just pass everything you need into this one context
+          ANNANNNNNNNNNNNNDDDD this will stop rerenders on your entire */}
+          <UserContext.Provider value={token, setToken, user, setUser} >
           <Header 
               token={token}
               setToken={setToken}/>
           <Switch>
               <Route exact path='/'>
               </Route>
-              <Route exact path='/registration'>
+              <Route exact path='/authentication'>
                   <Registration 
                       token={token} 
                       setToken={setToken}/>
@@ -92,6 +102,8 @@ const App = () => {
                       activities={activities}/>
               </Route>
           </Switch>
+          </UserContext.Provider>
+          </ThemeProvider>
       </Router>
   );
 }
