@@ -3,6 +3,8 @@ import { Menu, MenuItem } from "@mui/material";
 import Button from '@mui/material/Button'
 import { useHistory } from 'react-router';
 import UserContext from '../Contexts/UserContext';
+import Box from '@mui/material/Box'
+import MenuIcon from '@mui/icons-material/Menu';
 
 
 const BasicMenu = (
@@ -20,7 +22,7 @@ const BasicMenu = (
   };
 
   return (
-    <div>
+    <Box>
       <Button
         id="basic-button"
         aria-controls="basic-menu"
@@ -28,7 +30,7 @@ const BasicMenu = (
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        Dashboard
+				<MenuIcon/>
       </Button>
       <Menu
         id="basic-menu"
@@ -50,7 +52,14 @@ const BasicMenu = (
 						setAnchorEl(null);
 						history.push('/activities')
 					}}
-				>My account</MenuItem>
+				>Activities</MenuItem>
+				{(token) && 
+				<MenuItem
+					onClick={() => {
+						setAnchorEl(null);
+						history.push('/myaccount')
+					}}
+				>My Account</MenuItem>}
 				{(!token) ?
         <MenuItem 
 					onClick={() => {
@@ -65,7 +74,7 @@ const BasicMenu = (
 					}}
 				>Logout</MenuItem>}
       </Menu>
-    </div>
+    </Box>
   );
 }
 

@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import { 
     register,
     login
 } from '../api';
+import UserContext from '../Contexts/UserContext';
+import Box from '@mui/material/Box';
+import { flexbox } from '@mui/system';
 
 const Login = (props) => {
     const { token, setToken, setError } = props;
@@ -35,22 +38,27 @@ const Login = (props) => {
     }
 
     return (
-        (!token)
-        ?    <form onSubmit={handleSubmit}>
-                <input 
-                    placeholder="Username" 
-                    value={username}
-                    onChange={handleUsername}
-                /> 
-                <input 
-                    placeholder="Password" 
-                    value={password}
-                    onChange={handlePassword}
-                />
-                <button type='submit'>Login</button>
-            </form>
-            : <Redirect to='/' />
-    );
+        <div>
+            hi im a div
+        </div>
+    )
+    // return (
+    //     (!token)
+    //     ?    <form onSubmit={handleSubmit}>
+    //             <input 
+    //                 placeholder="Username" 
+    //                 value={username}
+    //                 onChange={handleUsername}
+    //             /> 
+    //             <input 
+    //                 placeholder="Password" 
+    //                 value={password}
+    //                 onChange={handlePassword}
+    //             />
+    //             <button type='submit'>Login</button>
+    //         </form>
+    //         : <Redirect to='/' />
+    // );
 }
 
 const Register = (props) => {
@@ -83,45 +91,52 @@ const Register = (props) => {
         setPassword(e.target.value);
     }
 
+
     return (
-        (!token)
-        ?    <form onSubmit={handleSubmit}>
-                <input 
-                    placeholder="Username" 
-                    value={username}
-                    onChange={handleUsername}
-                /> 
-                <input 
-                    placeholder="Password" 
-                    value={password}
-                    onChange={handlePassword}
-                />
-                <button type='submit'>Register</button>
-            </form>
-            : <Redirect to='/' />
-    );
+        <div>
+            im a div
+        </div>
+    )
+    // return (
+    //     (!token)
+    //     ?    <form onSubmit={handleSubmit}>
+    //             <input 
+    //                 placeholder="Username" 
+    //                 value={username}
+    //                 onChange={handleUsername}
+    //             /> 
+    //             <input 
+    //                 placeholder="Password" 
+    //                 value={password}
+    //                 onChange={handlePassword}
+    //             />
+    //             <button type='submit'>Register</button>
+    //         </form>
+    //         : <Redirect to='/' />
+    // );
 }
 
-const Registration = (props) => {
-    const { token, setToken } = props;
+const Registration = () => {
+    const { token, setToken } = useContext(UserContext);
     const [error, setError] = useState('');
 
     return (
-        <div className='registration'>
-            {error && 
-                <div className='error'>
-                    {error}
-                </div>
-            }
-            <Login
+        <Box
+            sx={{
+                display: 'flex',
+            }}
+        >
+
+            {/* <Login
                 setError={setError}
                 token={token}
                 setToken={setToken}/>
             <Register 
                 setError={setError}
                 token={token}
-                setToken={setToken}/>
-        </div>
+                setToken={setToken}/> */}
+
+        </Box>
     );
 }
 

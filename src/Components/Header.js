@@ -23,9 +23,9 @@ const Header = () => {
         }}>
             <Typography 
                 sx={{
-                   '&:hover' : {
+                    '&:hover' : {
                        cursor: 'pointer'
-                   }
+                    }
                 }}
                 variant='h4' 
                 className='header__link' 

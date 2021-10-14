@@ -75,9 +75,7 @@ const App = () => {
           because since its a small application you'll be able to just pass everything you need into this one context
           ANNANNNNNNNNNNNNDDDD this will stop rerenders on your entire */}
           <UserContext.Provider value={token, setToken, user, setUser} >
-          <Header 
-              token={token}
-              setToken={setToken}/>
+          <Header />
           <Switch>
               <Route exact path='/'>
               </Route>

@@ -1,3 +1,7 @@
+import Typography from '@mui/material/Typography';
+import CardContent from '@mui/material/CardContent';
+import Card from '@mui/material/Card';
+import { Box } from '@mui/system';
 import React, { useState, useEffect } from 'react'
 
 import {
@@ -10,39 +14,48 @@ const Routines = () => {
     useEffect(() => {
         (async () => {
             const fetchedRoutines = await getRoutines();
-            console.log(fetchedRoutines);
             setRoutines(fetchedRoutines);
         })();
     }, [])
 
     return (
-        <React.Fragment>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: ['column', 'row'],
+            }}>
         {routines.map(({id, name, creatorName, goal, activities}) => {
             return (
-                <div 
+                <Card
+                    variant="outlined"
                     key={id}
-                    className="routine">
-                    <header>
-                        <p>Routine Name: {name}</p>
-                        <p>Routine Goal: {goal}</p>
-                        <p>Creator: {creatorName}</p>
-                    </header>
-                    <main>
-                        {activities.map(({count, duration, name: actName, description, id}) => {
+                    className="routine"
+                    sx={{
+                        marginBottom: ['1em'],
+                        mx: '.3em'
+                    }}
+                >
+                    <CardContent>
+                        <Typography>Routine Name: {name}</Typography>
+                        <Typography>Routine Goal: {goal}</Typography>
+                        <Typography>Creator: {creatorName}</Typography>
+                    <Box>
+                        {activities.length > 0 && activities.map(({count, duration, name: actName, description, id}) => {
                             return (
-                                <div className='activity' key={id}>
-                                    <p>Activity Name: {actName}</p>
-                                    <p>Activity Description: {description}</p>
-                                    <p>Count: {count}</p>
-                                    <p>Duration: {duration}</p>
-                                </div>
+                                <Card className='activity' key={id}>
+                                    <Typography>Activity Name: {actName}</Typography>
+                                    <Typography>Activity Description: {description}</Typography>
+                                    <Typography>Count: {count}</Typography>
+                                    <Typography>Duration: {duration}</Typography>
+                                </Card>
                             );
                         })}
-                    </main>
-                </div>
+                    </Box>
+                    </CardContent>
+                </Card>
             );
         })}
-        </ React.Fragment>
+        </Box>
     );
 }
 
