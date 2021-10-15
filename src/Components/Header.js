@@ -8,7 +8,8 @@ import UserContext from '../Contexts/UserContext';
 
 const Header = () => {
     const history = useHistory();
-    const {token, setToken} = useContext(UserContext)
+    const {token, setToken, user} = useContext(UserContext)
+    console.log(user)
 
     const handleLogout = () => {
         setToken('');
@@ -19,7 +20,11 @@ const Header = () => {
         <Box sx={{
             display: 'flex',
             width: '100vw',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            alignItems: 'flex-end',
+            px: '.7rem',
+            py: '.35rem'
+            
         }}>
             <Typography 
                 sx={{
@@ -34,6 +39,7 @@ const Header = () => {
                     history.push('/')
                 }}
             >FitnessTrac.kr</Typography>
+            {token && <Typography> Account: {user.username}</Typography>}
             <Box 
                 sx={{
                     display: ['none', 'inline'],
@@ -65,7 +71,7 @@ const Header = () => {
                     className='header__link' 
                     to="/registration"
                     onClick={() => {
-                        history.push('/authentication')
+                        history.push('/login')
                     }}
                 >Login/Register</Button> : 
                 <Button 

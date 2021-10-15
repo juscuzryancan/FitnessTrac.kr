@@ -10,7 +10,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 const BasicMenu = (
 ) => {
 	const history = useHistory();
-	const {token} = useContext(UserContext)
+	const {token, setToken} = useContext(UserContext)
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -64,13 +64,14 @@ const BasicMenu = (
         <MenuItem 
 					onClick={() => {
 						setAnchorEl(null);
-						history.push('/authentication')
+						history.push('/login')
 					}}
 				>Login/Register</MenuItem> :
 				<MenuItem
           onClick={() => {
 						setToken('');
 						localStorage.removeItem('token');
+            history.push('/');
 					}}
 				>Logout</MenuItem>}
       </Menu>

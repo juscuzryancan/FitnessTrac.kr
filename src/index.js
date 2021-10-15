@@ -13,7 +13,7 @@ import {
 } from './api'
 
 import { 
-  Registration,
+  Login,
   Header,
   Activities,
   Routines,
@@ -75,38 +75,32 @@ const App = () => {
           {/* you might want to change the name user context and just name it context
           because since its a small application you'll be able to just pass everything you need into this one context
           ANNANNNNNNNNNNNNDDDD this will stop rerenders on your entire */}
-          <UserContext.Provider value={token, setToken, user, setUser} >
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column'
-            }}>
-          <Header />
-          <Switch>
-              <Route exact path='/'>
-              </Route>
-              <Route exact path='/authentication'>
-                  <Registration 
-                      token={token} 
-                      setToken={setToken}/>
-              </Route>
-              <Route exact path='/activities'>
-                  <Activities 
-                      token={token}
+          <UserContext.Provider value={{token, setToken, user, setUser}} >
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+            <Header />
+              <Switch>
+                  <Route exact path='/'>
+                  </Route>
+                  <Route exact path='/login'>
+                    <Login />
+                  </Route>
+                  <Route exact path='/activities'>
+                    <Activities 
                       activities={activities}
                       setActivities={setActivities}/>
-              </Route>
-              <Route exact path='/routines'>
-                  <Routines />
-              </Route>
-              <Route exact path='/myroutines'>
-                  <MyRoutines 
-                      user={user}
-                      token={token}
-                      activities={activities}/>
-              </Route>
-          </Switch>
-          </Box>
+                  </Route>
+                  <Route exact path='/routines'>
+                    <Routines />
+                  </Route>
+                  <Route exact path='/myroutines'>
+                    <MyRoutines activities={activities}/>
+                  </Route>
+              </Switch>
+            </Box>
           </UserContext.Provider>
           </ThemeProvider>
       </Router>
