@@ -22,6 +22,7 @@ import {
 
 import UserContext from './Contexts/UserContext';
 
+import Box from '@mui/material/Box';
 import { ThemeProvider } from '@mui/material/styles';
 import {default as theme} from './Theme/theme.js'
 
@@ -75,6 +76,11 @@ const App = () => {
           because since its a small application you'll be able to just pass everything you need into this one context
           ANNANNNNNNNNNNNNDDDD this will stop rerenders on your entire */}
           <UserContext.Provider value={token, setToken, user, setUser} >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column'
+            }}>
           <Header />
           <Switch>
               <Route exact path='/'>
@@ -100,6 +106,7 @@ const App = () => {
                       activities={activities}/>
               </Route>
           </Switch>
+          </Box>
           </UserContext.Provider>
           </ThemeProvider>
       </Router>

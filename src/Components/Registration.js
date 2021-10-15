@@ -6,7 +6,10 @@ import {
 } from '../api';
 import UserContext from '../Contexts/UserContext';
 import Box from '@mui/material/Box';
-import { flexbox } from '@mui/system';
+import TextField from '@mui/material/TextField';
+import Card from '@mui/material/Card'
+import Button from '@mui/material/Button'
+import Typography  from '@mui/material/Typography';
 
 const Login = (props) => {
     const { token, setToken, setError } = props;
@@ -124,8 +127,23 @@ const Registration = () => {
         <Box
             sx={{
                 display: 'flex',
+                flexGrow: 1,
+                justifyContent: 'center'
             }}
         >
+            <Card
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    width: '80%',
+                    height: '30em'
+                }}>
+                <Typography variant='h4' sx={{margin: '1em'}}>Login Page</Typography>
+                <TextField sx={{marginBottom: '1em'}} label="Username" variant="outlined"></TextField>
+                <TextField sx={{marginBottom: '1em'}} label="Password" variant="outlined"></TextField>
+                <Button variant='outlined'>Login</Button>
+            </Card>
 
             {/* <Login
                 setError={setError}
