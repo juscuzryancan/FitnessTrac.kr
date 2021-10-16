@@ -46,7 +46,6 @@ const Header = () => {
                 }}>
                 <Button 
                     className='header__link' 
-                    to="/routines"
                     onClick={() => {
                         history.push('/routines')
                     }}
@@ -54,14 +53,12 @@ const Header = () => {
                 {token && 
                 <Button 
                     className='header__link' 
-                    to="/myroutines"
                     onClick={() => {
-                        history.push('/myroutines')
+                        history.push('/myaccount')
                     }}
-                >My Routines</Button>}
+                >My Account</Button>}
                 <Button 
                     className='header__link' 
-                    to="/activities"
                     onClick={() => {
                         history.push('/activities')
                     }}
@@ -69,7 +66,6 @@ const Header = () => {
                 {(!token) ? 
                 <Button 
                     className='header__link' 
-                    to="/registration"
                     onClick={() => {
                         history.push('/login')
                     }}
@@ -78,7 +74,6 @@ const Header = () => {
                     onClick={handleLogout}
                 >Logout</Button>}
             </Box>
-            {/*replace with icon maybe to avoid using a box */}
             <Box sx={{
                 display: ['inline', 'none']
             }}>
