@@ -20,6 +20,8 @@ import {
   MyRoutines
 } from './Components'
 
+import Home from './Pages/Home'
+
 import UserContext from './Contexts/UserContext';
 
 import Box from '@mui/material/Box';
@@ -84,6 +86,7 @@ const App = () => {
             <Header />
               <Switch>
                   <Route exact path='/'>
+                    <Home />
                   </Route>
                   <Route exact path='/login'>
                     <Login />

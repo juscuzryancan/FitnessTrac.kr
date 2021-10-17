@@ -9,7 +9,6 @@ import UserContext from '../Contexts/UserContext';
 const Header = () => {
     const history = useHistory();
     const {token, setToken, user} = useContext(UserContext)
-    console.log(user)
 
     const handleLogout = () => {
         setToken('');
