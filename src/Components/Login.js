@@ -5,12 +5,7 @@ import {
     login
 } from '../api';
 import UserContext from '../Contexts/UserContext';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Card from '@mui/material/Card'
-import Button from '@mui/material/Button'
-import Typography  from '@mui/material/Typography';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
 const Login = () => {
@@ -19,7 +14,7 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const handleLogin = async () => {
         const { data: {token} } = await axios.post('/api/users/login', {
@@ -27,6 +22,7 @@ const Login = () => {
             password
         });
         setToken(token)
+        localStorage.setItem('token', token);
         history.push('/')
     }
 
@@ -71,7 +67,7 @@ const Login = () => {
                     textDecoration: 'underline',
                     cursor: 'pointer',
                     marginTop: '1rem'
-                }} onClick={() => { history.push('/register')}}>Not Registered? Sign Up Here</Typography>
+                }} onClick={() => { navigate('/register')}}>Not Registered? Sign Up Here</Typography>
             </Card>
         </Box>
     );

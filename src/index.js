@@ -1,43 +1,23 @@
-import {useEffect, useState, useContext} from 'react';
+import { useEffect, useState, useContext } from 'react';
 import ReactDOM from 'react-dom';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { getActivities, getUserData } from './api'
 
-import {
-  getActivities,
-  getUserData
-} from './api'
-
-import { 
-  Login,
-  Header,
-  Activities,
-  Routines,
-  MyRoutines
-} from './Components'
-
-import Home from './Pages/Home'
-
-import UserContext from './Contexts/UserContext';
-
-import Box from '@mui/material/Box';
-import { ThemeProvider } from '@mui/material/styles';
-import {default as theme} from './Theme/theme.js'
-
+import { Login, Header, Activities, Routines, MyRoutines } from './Components'
+import { Home } from './Pages'
 
 const App = () => {
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState(() => {
+    if (localStorage.getItem('token')) {
+      return localStorage.getItem('token');
+    } else {
+      return '';
+    }
+  });
   const [user, setUser] = useState({});
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
-    if(localStorage.getItem('token')){
-      setToken(localStorage.getItem('token'));
-    }
     (async () => {
       try {
         const fetchActivities = await getActivities();
@@ -49,18 +29,18 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-      if (token) {
-          (async () => {
-              try {
-                  const user = await getUserData(token);
-                  setUser(user);
-              } catch (error) {
-                  console.error(error);
-              }
-          })();
-      } else {
-          setUser({});
-      }
+    if (token) {
+      (async () => {
+        try {
+          const user = await getUserData(token);
+          setUser(user);
+        } catch (error) {
+          console.error(error);
+        }
+      })();
+    } else {
+      setUser({});
+    }
   }, [token]);
 
   // TODO: 
@@ -72,41 +52,16 @@ const App = () => {
   // can apply the correct css for each component
 
   return (
-      <Router>
-        <ThemeProvider theme={theme}>
-          {/* you might want to change the name user context and just name it context
-          because since its a small application you'll be able to just pass everything you need into this one context
-          ANNANNNNNNNNNNNNDDDD this will stop rerenders on your entire */}
-          <UserContext.Provider value={{token, setToken, user, setUser}} >
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column'
-              }}>
-            <Header />
-              <Switch>
-                  <Route exact path='/'>
-                    <Home />
-                  </Route>
-                  <Route exact path='/login'>
-                    <Login />
-                  </Route>
-                  <Route exact path='/activities'>
-                    <Activities 
-                      activities={activities}
-                      setActivities={setActivities}/>
-                  </Route>
-                  <Route exact path='/routines'>
-                    <Routines />
-                  </Route>
-                  <Route exact path='/myroutines'>
-                    <MyRoutines activities={activities}/>
-                  </Route>
-              </Switch>
-            </Box>
-          </UserContext.Provider>
-          </ThemeProvider>
-      </Router>
+    <Router>
+        <Header token={token}/>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/activities' element={<Activities activities={activities} setActivities={setActivities} />}  />
+          <Route path='/routines' element={<Routines />} />
+          <Route path='/myroutines' element={<MyRoutines activities={activities} />} />
+        </Routes>
+    </Router>
   );
 }
 

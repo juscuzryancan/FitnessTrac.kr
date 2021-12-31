@@ -1,8 +1,4 @@
-import Typography from '@mui/material/Typography';
-import CardContent from '@mui/material/CardContent';
-import Card from '@mui/material/Card';
-import { Box } from '@mui/system';
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import {
     getRoutines
@@ -10,53 +6,54 @@ import {
 
 const Routines = () => {
     const [routines, setRoutines] = useState([]);
-
+    
     useEffect(() => {
         (async () => {
             const fetchedRoutines = await getRoutines();
             setRoutines(fetchedRoutines);
         })();
     }, [])
-
+    
     return (
         <Box
-            sx={{
-                display: 'flex',
-                flexDirection: ['column', 'row'],
-            }}>
-        {routines.map(({id, name, creatorName, goal, activities}) => {
+        sx={{
+            display: 'flex',
+            flexDirection: ['column', 'row'],
+        }}>
+        {routines.map(({ id, name, creatorName, goal, activities }) => {
             return (
                 <Card
-                    variant="outlined"
-                    key={id}
-                    className="routine"
-                    sx={{
-                        marginBottom: ['1em'],
-                        mx: '.3em'
-                    }}
+                variant="outlined"
+                key={id}
+                className="routine"
+                sx={{
+                    marginBottom: ['1em'],
+                    mx: '.3em'
+                }}
                 >
-                    <CardContent>
-                        <Typography>Routine Name: {name}</Typography>
-                        <Typography>Routine Goal: {goal}</Typography>
-                        <Typography>Creator: {creatorName}</Typography>
-                    <Box>
-                        {activities.length > 0 && activities.map(({count, duration, name: actName, description, id}) => {
-                            return (
-                                <Card className='activity' key={id}>
-                                    <Typography>Activity Name: {actName}</Typography>
-                                    <Typography>Activity Description: {description}</Typography>
-                                    <Typography>Count: {count}</Typography>
-                                    <Typography>Duration: {duration}</Typography>
-                                </Card>
-                            );
-                        })}
+                <CardContent>
+                <Typography>Routine Name: {name}</Typography>
+                <Typography>Routine Goal: {goal}</Typography>
+                <Typography>Creator: {creatorName}</Typography>
+                <Box>
+                {activities.length > 0 && activities.map(({ count, duration, name: actName, description, id }) => {
+                    return (
+                        <Card className='activity' key={id}>
+                        <Typography>Activity Name: {actName}</Typography>
+                        <Typography>Activity Description: {description}</Typography>
+                        <Typography>Count: {count}</Typography>
+                        <Typography>Duration: {duration}</Typography>
+                        </Card>
+                        );
+                    })}
                     </Box>
                     </CardContent>
-                </Card>
-            );
-        })}
-        </Box>
-    );
+                    </Card>
+                    );
+                })}
+                </Box>
+                );
 }
-
+            
 export default Routines;
+            
