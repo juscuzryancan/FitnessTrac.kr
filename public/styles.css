@@ -1,9 +1,12 @@
- * {
-	 box-sizing: border-box;
-	 margin: 0;
-	 padding: 0;
- }
+:root {
+	--primary-color: #413c58;
+	--secondary-color: #4281a4;
+	--tertiary-color: #e7e5df;
+}
 
- body {
-	 height: 100vh;
- }
+* {
+	background-color: var(--primary-color);
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}

@@ -1,3 +1,4 @@
+import './Header.css';
 import { useNavigate } from 'react-router';
 
 const Header = ({
@@ -11,47 +12,15 @@ const Header = ({
     }
 
     return (
-        <nav>
-            <div
-                onClick={() => {
-                    navigate('/')
-                }}
-            >FitnessTrac.kr</div>
+        <nav className='nav-bar'>
+            <div className='nav-title' onClick={() => { navigate('/') }}>FitnessTrac.kr</div>
             {token && <div> Account: {user.username}</div>}
-            <div
-                sx={{
-                    display: ['none', 'inline'],
-                }}>
-                <button
-                    className='header__link'
-                    onClick={() => {
-                        navigate('/routines')
-                    }}
-                >Routines</button>
-                {token &&
-                    <button
-                        className='header__link'
-                        onClick={() => {
-                            navigate('/myaccount')
-                        }}
-                    >My Account</button>}
-                <button
-                    className='header__link'
-                    onClick={() => {
-                        navigate('/activities')
-                    }}
-                >Activities</button>
-                {(!token) ?
-                    <button
-                        className='header__link'
-                        onClick={() => {
-                            navigate('/login')
-                        }}
-                    >Login/Register</button> :
-                    <button
-                        onClick={handleLogout}
-                    >Logout</button>}
-            </div>
+            <button className='header-button' onClick={() => { navigate('/routines') }}>Routines</button>
+            {token && <button className='header-button' onClick={() => { navigate('/myaccount') }} >My Account</button>}
+            <button className='header-button' onClick={() => { navigate('/activities') }} >Activities</button>
+            {(!token) ?
+                <button className='header-button' onClick={() => { navigate('/login') }} >Login/Register</button>
+                : <button onClick={handleLogout} >Logout</button>}
         </nav>
     );
 }
