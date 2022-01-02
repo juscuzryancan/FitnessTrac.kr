@@ -1,9 +1,13 @@
 import './Header.css';
 import { useNavigate } from 'react-router';
+import { NavMenu } from '../'
+import HamburgerIcon from '../HamburgerIcon';
+import { useState } from 'react';
 
 const Header = ({
     token,
 }) => {
+    const [navMenuOpen, setNavMenuOpen] = useState(false);
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -21,6 +25,13 @@ const Header = ({
             {(!token) ?
                 <button className='header-button' onClick={() => { navigate('/login') }} >Login/Register</button>
                 : <button onClick={handleLogout} >Logout</button>}
+            <div 
+            className='hamburger-icon'
+            onClick={() => {
+                setNavMenuOpen(!navMenuOpen);
+            }}>
+                <HamburgerIcon  />
+            </div>
         </nav>
     );
 }
