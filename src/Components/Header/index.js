@@ -32,6 +32,7 @@ const Header = ({
             }}>
                 <HamburgerIcon  />
             </div>
+            {navMenuOpen && <NavMenu setNavMenuOpen={setNavMenuOpen} />}
         </nav>
     );
 }
