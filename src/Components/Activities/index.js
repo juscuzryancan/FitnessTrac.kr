@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
+import './Activities.css';
 
 import {
     getActivities,
     createActivity
-} from '../api'
+} from '../../api'
 
 const Activities = (props) => {
     const { token, activities, setActivities } = props;
@@ -49,12 +50,13 @@ return (
                 <button type='submit'>Submit</button>
             </form>}
         {
-            activities.map(({id, name, description}) => {
+            activities.map(({id, name, description, duration, count}) => {
                 return (
-                    <div key={id} 
-                    style={{border: '1px solid black'}} className='activity'>
-                    <p>{name}</p>
-                    <p>{description}</p>
+                    <div key={id}>
+                        <h3>Activity: {name}</h3>
+                        <div>Description: {description}</div>
+                        <div>Duration: {duration}</div>
+                        <div>Count: {count}</div>
                     </div>
                 );
             })}

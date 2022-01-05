@@ -12,6 +12,10 @@
 	font-size: 3rem;
 }
 
+.nav-title:hover {
+	cursor: pointer;
+}
+
 .header-button {
 	border-radius: 10px;
 	padding: 5px;

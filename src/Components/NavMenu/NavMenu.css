@@ -4,5 +4,11 @@
 	top: 0;
 	list-style-type: none;
 	height: 10%;
-	width: 30%;
+	width: fit-content;
+
+	border: 1px solid black;
+}
+
+.nav-menu > li {
+	font-size: 1.5rem;
 }

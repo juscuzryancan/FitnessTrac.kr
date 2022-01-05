@@ -1,0 +1,26 @@
+.routines {
+	display: flex;
+	flex-direction: column;
+	color: var(--tertiary-color);
+	padding: 1rem;
+}
+
+.routine {
+	border: 1px solid var(--tertiary-color);
+	color: var(--tertiary-color);
+	margin-bottom: 1rem;
+}
+
+.routine-header {
+	padding: .5rem;
+}
+
+.routine * {
+	background-color: var(--secondary-color);
+}
+
+.routine-activity {
+	list-style-type: none;
+	padding: 1rem;
+	border: 1px solid var(--tertiary-color);
+}

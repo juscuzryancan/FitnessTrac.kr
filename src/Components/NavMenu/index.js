@@ -1,34 +1,31 @@
 import './NavMenu.css';
 import { HamburgerIcon } from '../';
 import { useRef, useEffect } from 'react';
+import { useClickOutside } from '../../Hooks';
 
 const NavMenu = ({
 	setNavMenuOpen
 }) => {
-	const ref = useRef(null);
 
-	const handleClick = (e) => {
-		console.log('yo');
-		if (ref.current && !ref.current.contains(e.target))	 {
-			setNavMenuOpen(false);
-			console.log('hello');
-		}
+
+	const ref = useRef(null);
+	const handleClick = () => {
+		setNavMenuOpen(false);
 	}
-	console.log(ref);
+	useClickOutside(ref, handleClick);
 
 	useEffect(() => {
-		document.addEventListener("click", handleClick);
+		window.addEventListener("click", handleClick);
 
-		return document.removeEventListener("click", handleClick);
+		return window.removeEventListener("click", handleClick);
 	}, [])
 
 
 	return (
 		<ul ref={ref} className='nav-menu'>
-			<li>List Item</li>
-			<li>List Item</li>
-			<li>List Item</li>
-			<li>List Item</li>
+			<li>Routines</li>
+			<li>Activities</li>
+			<li>Login/Register</li>
 		</ul>
 	)
 }
