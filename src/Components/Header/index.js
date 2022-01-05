@@ -6,6 +6,8 @@ import { useState } from 'react';
 
 const Header = ({
     token,
+    user,
+    setToken
 }) => {
     const [navMenuOpen, setNavMenuOpen] = useState(false);
     const navigate = useNavigate();
@@ -18,7 +20,7 @@ const Header = ({
     return (
         <nav className='nav-bar'>
             <div className='nav-title' onClick={() => { navigate('/') }}>FitnessTrac.kr</div>
-            {token && <div> Account: {user.username}</div>}
+            {token && <div> Account: {user?.username}</div>}
             <button className='header-button' onClick={() => { navigate('/routines') }}>Routines</button>
             {token && <button className='header-button' onClick={() => { navigate('/myaccount') }} >My Account</button>}
             <button className='header-button' onClick={() => { navigate('/activities') }} >Activities</button>

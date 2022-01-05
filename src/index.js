@@ -53,7 +53,7 @@ const App = () => {
 
   return (
     <Router>
-        <Header token={token}/>
+        <Header token={token} setToken={setToken}/>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login />} />
