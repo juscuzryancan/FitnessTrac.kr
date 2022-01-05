@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import './Activities.css';
+import { Activity } from '..';
 
 import {
     getActivities,
@@ -11,6 +12,7 @@ const Activities = (props) => {
     const [newName, setNewName] = useState('');
     const [newDescription, setNewDescription] = useState('');
     const [error, setError] = useState('');
+    console.log(activities);
 
     const handleName = (e) => {
         setNewName(e.target.value);
@@ -34,33 +36,29 @@ const Activities = (props) => {
     }
 
 return (
-        <>
-        {(error) && <div>{error}</div>}
-        {token && 
-            <form
-                onSubmit={handleSubmit}>
-                <input 
-                    onChange={handleName}
-                    value={newName} 
-                    placeholder='Activity Name'/> 
-                <input 
-                    onChange={handleDescription}
-                    value={newDescription} 
-                    placeholder='Activity Description'/> 
-                <button type='submit'>Submit</button>
-            </form>}
-        {
-            activities.map(({id, name, description, duration, count}) => {
-                return (
-                    <div key={id}>
-                        <h3>Activity: {name}</h3>
-                        <div>Description: {description}</div>
-                        <div>Duration: {duration}</div>
-                        <div>Count: {count}</div>
-                    </div>
-                );
-            })}
-        </>
-    );}
+        <div className='activities'>
+            {(error) && <div>{error}</div>}
+            {token &&
+                <form
+                    onSubmit={handleSubmit}>
+                    <input
+                        onChange={handleName}
+                        value={newName}
+                        placeholder='Activity Name' />
+                    <input
+                        onChange={handleDescription}
+                        value={newDescription}
+                        placeholder='Activity Description' />
+                    <button type='submit'>Submit</button>
+                </form>}
+            {
+                activities.length > 0 && activities.map((activity) => {
+                    return (
+                        <Activity key={activity.id} activity={activity} />
+                    );
+                })}
+        </div>
+    );
+}
 
 export default Activities;

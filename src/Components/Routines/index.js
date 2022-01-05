@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import './Routines.css';
 
 import { getRoutines } from '../../api'
+import { Activity } from '..';
 
 const Routine = ({routine}) => {
     const {
@@ -21,18 +22,13 @@ const Routine = ({routine}) => {
                 <h4>Creator: {creatorName}</h4>
                 <h4>Goal: {goal}</h4>
             </div>
-            <ul>
-                {activities.map(({ count, description, duration, id, name }) => {
+            <div className='routine-activities'>
+                {activities.map((activity, i) => {
                     return (
-                            <li key={id} className='routine-activity'>
-                                <h3>Activity: {name}</h3>
-                                <div>Description: {description}</div>
-                                <div>Duration: {duration}</div>
-                                <div>Count: {count}</div>
-                            </li>
+                        <Activity key={i} activity={activity} />
                     );
                 })}
-            </ul>
+            </div>
         </div>
     )
 }

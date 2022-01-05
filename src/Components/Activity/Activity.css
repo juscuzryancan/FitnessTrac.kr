@@ -1,20 +1,11 @@
-.routines {
-	display: flex;
-	flex-direction: column;
-	color: var(--tertiary-color);
+.activity {
 	padding: 1rem;
-}
-
-.routine {
 	border: 1px solid var(--tertiary-color);
+	background-color: var(--secondary-color);
 	color: var(--tertiary-color);
 	margin-bottom: 1rem;
 }
 
-.routine-header {
-	padding: .5rem;
-}
-
-.routine * {
+.activity * {
 	background-color: var(--secondary-color);
 }

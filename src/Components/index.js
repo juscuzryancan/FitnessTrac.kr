@@ -5,3 +5,4 @@ export { default as Routines } from './Routines';
 export { default as MyRoutines } from './MyRoutines';
 export { default as NavMenu } from './NavMenu';
 export { default as HamburgerIcon } from './HamburgerIcon';
+export { default as Activity } from './Activity';
