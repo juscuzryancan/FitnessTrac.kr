@@ -13,7 +13,6 @@ const Routine = ({routine}) => {
         isPublic,
         name,
     } = routine;
-    console.log(activities);
 
     return (
         <div className="routine">

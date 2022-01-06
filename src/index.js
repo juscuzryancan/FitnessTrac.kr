@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { getActivities, getUserData } from './api'
 
 import { Login, Header, Activities, Routines, MyRoutines } from './Components'
-import { Home } from './Pages'
+import { Authentication, Home } from './Pages'
 
 const App = () => {
   const [token, setToken] = useState(() => {
@@ -56,7 +56,7 @@ const App = () => {
         <Header token={token} setToken={setToken}/>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
+          <Route path='/authentication' element={<Authentication setToken={setToken} />} />
           <Route path='/activities' element={<Activities activities={activities} setActivities={setActivities} />}  />
           <Route path='/routines' element={<Routines />} />
           <Route path='/myroutines' element={<MyRoutines activities={activities} />} />

@@ -25,7 +25,7 @@ const Header = ({
             {token && <button className='header-button' onClick={() => { navigate('/myaccount') }} >My Account</button>}
             <button className='header-button' onClick={() => { navigate('/activities') }} >Activities</button>
             {(!token) ?
-                <button className='header-button' onClick={() => { navigate('/login') }} >Login/Register</button>
+                <button className='header-button' onClick={() => { navigate('/authentication') }} >Login/Register</button>
                 : <button onClick={handleLogout} >Logout</button>}
             <div 
             className='hamburger-icon'

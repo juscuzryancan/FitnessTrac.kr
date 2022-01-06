@@ -9,12 +9,18 @@
 	border: 1px solid var(--tertiary-color);
 	color: var(--tertiary-color);
 	margin-bottom: 1rem;
+	background-color: var(--secondary-color);
 }
 
 .routine-header {
 	padding: .5rem;
+	background-color: var(--secondary-color);
 }
 
 .routine * {
 	background-color: var(--secondary-color);
+}
+
+.routine .activity {
+	border:none
 }
