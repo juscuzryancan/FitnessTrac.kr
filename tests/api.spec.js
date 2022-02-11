@@ -19,7 +19,11 @@ describe('API', () => {
   let token, registeredUser;
   let routineActivityToCreateAndUpdate = {routineId: 4, activityId: 8, count: 20, duration: 300};
   beforeAll(async() => {
+    client.connect();
     await rebuildDB();
+  })
+  afterAll(() => {
+    client.end();
   })
   it('responds to a request at /api/health with a message specifying it is healthy', async () => {
     const res = await axios.get(`${API_URL}/api/health`);
@@ -144,7 +148,7 @@ describe('API', () => {
     let routineToCreateAndUpdate = {isPublic: true, name: 'Elliptical Day', goal: 'Work on that Elliptical!'};
     let routineToFail = {isPublic: false, name: 'Elliptical Day 2', goal: 'Work on that Elliptical... again!'};
     const newRoutineData = {isPublic: false, name: 'Elliptical Day Private', goal: 'Work on that Elliptical, yet again!'}
-    describe('GET /routines', async () => {
+    describe('GET /routines', () => {
       it('Returns a list of public routines, includes the activities with them', async () => {
         const publicRoutinesFromDB = await getAllPublicRoutines();
         const {data: publicRoutinesFromAPI} = await axios.get(`${API_URL}/api/routines`);
@@ -167,7 +171,7 @@ describe('API', () => {
         expect(respondedRoutine.description).toBeFalsy();
       });
     });
-    describe('PATCH /routines/:routineId (**)', async () => {
+    describe('PATCH /routines/:routineId (**)', () => {
       it('Updates a routine, notably changing public/private, the name, or the goal', async () => {
         const {data: respondedRoutine} = await axios.patch(`${API_URL}/api/routines/${routineToCreateAndUpdate.id}`, newRoutineData, { headers: {'Authorization': `Bearer ${token}`} });
         expect(respondedRoutine.name).toEqual(newRoutineData.name);
@@ -175,7 +179,7 @@ describe('API', () => {
         routineToCreateAndUpdate = respondedRoutine;
       });
     });
-    describe('DELETE /routines/:routineId (**)', async () => {
+    describe('DELETE /routines/:routineId (**)', () => {
       it('Hard deletes a routine. Makes sure to delete all the routineActivities whose routine is the one being deleted.', async () => {
         const {data: deletedRoutine} = await axios.delete(`${API_URL}/api/routines/${routineToCreateAndUpdate.id}`, { headers: {'Authorization': `Bearer ${token}`} });
         const shouldBeDeleted = await getRoutineById(deletedRoutine.id);
@@ -185,7 +189,7 @@ describe('API', () => {
         expect(shouldBeDeleted).toBeFalsy();
       });
     });
-    describe('POST /routines/:routineId/activities', async () => {
+    describe('POST /routines/:routineId/activities', () => {
       let newRoutine
       it('Attaches a single activity to a routine.', async () => {
         newRoutine = await createRoutine({creatorId: registeredUser.id, name: 'Pull Ups', goal: '10 pull ups'})
@@ -203,7 +207,7 @@ describe('API', () => {
   });
   describe('routine_activities', () => {
     let newRoutineActivityData = {routineId: 3, activityId: 8, count: 25, duration: 200};
-    describe('PATCH /routine_activities/:routineActivityId (**)', async () => {
+    describe('PATCH /routine_activities/:routineActivityId (**)', () => {
       it('Updates the count or duration on the routine activity', async () => {
         const {data: respondedRoutineActivity} = await axios.patch(`${API_URL}/api/routine_activities/${routineActivityToCreateAndUpdate.id}`, newRoutineActivityData, { headers: {'Authorization': `Bearer ${token}`} });
         expect(respondedRoutineActivity.count).toEqual(newRoutineActivityData.count);
@@ -215,7 +219,7 @@ describe('API', () => {
         expect(respondedRoutineActivity.count).toBeFalsy();
       });
     });
-    describe('DELETE /routine_activities/:routineActivityId (**)', async () => {
+    describe('DELETE /routine_activities/:routineActivityId (**)', () => {
       it('Removes an activity from a routine, uses hard delete', async () => {
         const {data: deletedRoutineActivity} = await axios.delete(`${API_URL}/api/routine_activities/${routineActivityToCreateAndUpdate.id}`, { headers: {'Authorization': `Bearer ${token}`} });
         const shouldBeDeleted = await getRoutineActivityById(deletedRoutineActivity.id);
