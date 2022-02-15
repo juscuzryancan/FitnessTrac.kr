@@ -39,20 +39,22 @@ const getRoutineActivitiesByRoutine = async ({id}) => {
 }
 
 const updateRoutineActivity = async ({id, ...fields}) => {
+
     const fieldKeys = Object.keys(fields);
-
-    const setString = fieldKeys.map((fieldName, index) => {
-        return `${fieldName}=$${index+1}`
-    }).join(', ');
-
-    const setValues = Object.values(fields);
-    setValues.push(id);
 
     if (fieldKeys.length === 0) { 
         return; 
     }
 
+    const setString = fieldKeys.map((fieldName, index) => {
+        return `"${fieldName}"=$${index+1}`
+    }).join(', ');
+
+    const setValues = Object.values(fields);
+    setValues.push(id);
+
     try {
+
         const { rows: [ra] } = await client.query(`
             UPDATE routine_activities
             SET ${setString}
@@ -61,6 +63,7 @@ const updateRoutineActivity = async ({id, ...fields}) => {
         `, setValues);
 
         return ra;
+
     } catch (error) {
         throw error;
     }

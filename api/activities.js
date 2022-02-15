@@ -14,7 +14,7 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', requireUser, async (req, res, next) => {
     try {
         const { name, description } = req.body;
         const activity = await createActivity({ name, description });

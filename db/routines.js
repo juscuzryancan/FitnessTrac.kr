@@ -20,6 +20,7 @@ const createRoutine = async ({ creatorId, isPublic, name, goal }) => {
 };
 
 const getRoutinesWithoutActivities = async () => {
+
     try {
 
         const { rows: routines } = await client.query(`
@@ -248,8 +249,8 @@ const updateRoutine = async ({id, ...fields }) => {
     const setValues = Object.values(fields);
     setValues.push(id);
 
-
     try {
+
         const { rows: [routine] } = await client.query(`
             UPDATE routines
             SET ${setString}
@@ -258,6 +259,7 @@ const updateRoutine = async ({id, ...fields }) => {
         `, setValues);
 
         return routine;
+
     } catch (error) {
         throw error;
     }
