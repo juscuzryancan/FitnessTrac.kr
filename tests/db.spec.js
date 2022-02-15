@@ -13,8 +13,12 @@ const client = require('../db/client');
 
 describe('Database', () => {
   beforeAll(async() => {
+    client.connect()
     await rebuildDB();
   })
+  afterAll(() => {
+    client.end();
+  });
   describe('Users', () => {
     let userToCreateAndUpdate, queriedUser;
     let userCredentials = {username: 'billybob', password: 'bobbybadboy'};

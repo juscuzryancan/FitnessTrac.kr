@@ -1,13 +1,19 @@
 const client = require('./client');
+const util = require('util');
+const { getRoutineActivitiesByRoutine } = require('.');
 
 const createRoutine = async ({ creatorId, isPublic, name, goal }) => {
+
     try {
+
         const { rows: [routine] } = await client.query(`
             INSERT INTO routines( "creatorId", "isPublic", name, goal )
             VALUES ( $1, $2, $3, $4 )
             RETURNING *;
         `, [ creatorId, isPublic, name, goal ]);
+
         return routine;
+
     } catch (error) {
         throw error;
     }
@@ -15,83 +21,48 @@ const createRoutine = async ({ creatorId, isPublic, name, goal }) => {
 
 const getRoutinesWithoutActivities = async () => {
     try {
+
         const { rows: routines } = await client.query(`
             SELECT * FROM routines;
         `);
+
         return routines;
+
     } catch (error) {
         throw error;
     }
 };
 
 const getAllRoutines = async () => {
+
     try {
-        const { rows : queriedRoutines } = await client.query(`
-            SELECT  *
-            FROM routines r
-            LEFT JOIN 
-                (SELECT duration, 
-                count, 
-                "routineId" AS id, 
-                "activityId"
-                FROM routine_activities) ra
-            ON (r.id = ra.id)
-            LEFT JOIN 
-                (SELECT id AS "activityId", 
-                name AS "activityName", 
-                description
-                from activities) a
-            ON (ra."activityId" = a."activityId")
-            INNER JOIN 
-                (SELECT  
-                id AS "creatorId",
-                username AS "creatorName"
-                FROM users) u
-            ON (r."creatorId" = u."creatorId")
-        ;`);
-        
-        const routines = [];
-        let prevId = 0;
-        let activities = [];
-        let activity = {};
-        let routine = {};
-        for(let i = 0; i < queriedRoutines.length; i++){
-            if(!queriedRoutines[i].activityId || i === queriedRoutines.length-1) {
-                routine = queriedRoutines[i]
-                delete routine.activityId;
-                delete routine.description;
-                delete routine.duration;
-                delete routine.count;
-                delete routine.activityName;
-                routine.activities = activities;
-                routines.push(routine);
+
+        const { rows: routines } = await client.query(`
+            SELECT routines.*, users.username AS "creatorName"
+            FROM routines
+            JOIN users
+            ON routines."creatorId" = users.id;
+        `);
+
+        const { rows: activities } = await client.query(`
+            SELECT activities.*, routine_activities.count, routine_activities.duration, routine_activities."routineId"
+            FROM activities
+            RIGHT JOIN routine_activities 
+            ON activities.id = routine_activities."activityId"
+        `);
+
+        for(const routine of routines) {
+            routine.activities = [];
+            for(const activity of activities) {
+                if(activity.routineId === routine.id) {
+                    delete activity.routineId;
+                    routine.activities.push(activity);
+                }
             }
-
-            activity = {
-                id: queriedRoutines[i].activityId,
-                name: queriedRoutines[i].activityName,
-                description: queriedRoutines[i].description,
-                count: queriedRoutines[i].count,
-                duration: queriedRoutines[i].duration
-            };
-            activities.push(activity);
-
-            if(queriedRoutines[i].id !== prevId && i !== 0){
-                routine = queriedRoutines[i-1];
-                delete routine.activityId;
-                delete routine.description;
-                delete routine.duration;
-                delete routine.count;
-                delete routine.activityName;
-                routine.activities = activities;
-                routines.push(routine);
-                activities = [];
-            }
-
-            prevId = queriedRoutines[i].id;
         }
 
         return routines;
+
     } catch (error) {
         throw error;
     }
@@ -99,321 +70,167 @@ const getAllRoutines = async () => {
 
 
 const getAllPublicRoutines = async () => {
+
     try {
-        const { rows : queriedRoutines } = await client.query(`
-            SELECT  *
-            FROM routines r
-            INNER JOIN 
-                (SELECT duration, 
-                count, 
-                "routineId" AS id, 
-                "activityId"
-                FROM routine_activities) ra
-            ON (r.id = ra.id)
-            INNER JOIN 
-                (SELECT id AS "activityId", 
-                name AS "activityName", 
-                description
-                from activities) a
-            ON (ra."activityId" = a."activityId")
-            INNER JOIN 
-                (SELECT  
-                id AS "creatorId",
-                username AS "creatorName"
-                FROM users) u
-            ON (r."creatorId" = u."creatorId")
-            WHERE "isPublic" = true
-        ;`);
 
-        
-        const routines = [];
-        let prevId = 0;
-        let activities = [];
-        let activity = {};
-        let routine = {};
-        for(let i = 0; i < queriedRoutines.length; i++){
-            if(!queriedRoutines[i].activityId || i === queriedRoutines.length-1) {
-                routine = queriedRoutines[i]
-                delete routine.activityId;
-                delete routine.description;
-                delete routine.duration;
-                delete routine.count;
-                delete routine.activityName;
-                routine.activities = activities;
-                routines.push(routine);
+        const { rows: routines } = await client.query(`
+            SELECT routines.*, users.username AS "creatorName"
+            FROM routines
+            JOIN users
+            ON routines."creatorId" = users.id
+            WHERE routines."isPublic" = true;
+        `);
+
+        const { rows: activities } = await client.query(`
+            SELECT activities.*, routine_activities.count, routine_activities.duration, routine_activities."routineId"
+            FROM activities
+            RIGHT JOIN routine_activities 
+            ON activities.id = routine_activities."activityId"
+        `);
+
+        for(const routine of routines) {
+            routine.activities = [];
+            for(const activity of activities) {
+                if(activity.routineId === routine.id) {
+                    delete activity.routineId;
+                    routine.activities.push(activity);
+                }
             }
-
-            activity = {
-                id: queriedRoutines[i].activityId,
-                name: queriedRoutines[i].activityName,
-                description: queriedRoutines[i].description,
-                count: queriedRoutines[i].count,
-                duration: queriedRoutines[i].duration
-            };
-            activities.push(activity);
-
-            if(queriedRoutines[i].id !== prevId && i !== 0){
-                routine = queriedRoutines[i-1];
-                delete routine.activityId;
-                delete routine.description;
-                delete routine.duration;
-                delete routine.count;
-                delete routine.activityName;
-                routine.activities = activities;
-                routines.push(routine);
-                activities = [];
-            }
-
-            prevId = queriedRoutines[i].id;
         }
 
-
         return routines;
+
     } catch (error) {
         throw error;
     }
+
 };
 
 const getAllRoutinesByUser = async ({username}) => {
+
     try {
-        const { rows : queriedRoutines } = await client.query(`
-            SELECT  *
-            FROM routines r
-            INNER JOIN 
-                (SELECT duration, 
-                count, 
-                "routineId" AS id, 
-                "activityId"
-                FROM routine_activities) ra
-            ON (r.id = ra.id)
-            INNER JOIN 
-                (SELECT id AS "activityId", 
-                name AS "activityName", 
-                description
-                from activities) a
-            ON (ra."activityId" = a."activityId")
-            INNER JOIN 
-                (SELECT  
-                id AS "creatorId",
-                username AS "creatorName"
-                FROM users) u
-            ON (r."creatorId" = u."creatorId")
-            WHERE "creatorName" = $1
-        ;`,[username]);
 
-        
-        const routines = [];
-        let prevId = 0;
-        let activities = [];
-        let activity = {};
-        let routine = {};
-        for(let i = 0; i < queriedRoutines.length; i++){
-            if(!queriedRoutines[i].activityId || i === queriedRoutines.length-1) {
-                routine = queriedRoutines[i]
-                delete routine.activityId;
-                delete routine.description;
-                delete routine.duration;
-                delete routine.count;
-                delete routine.activityName;
-                routine.activities = activities;
-                routines.push(routine);
+        const { rows: routines } = await client.query(`
+            SELECT routines.*, users.username AS "creatorName"
+            FROM routines
+            JOIN users
+            ON routines."creatorId" = users.id
+            WHERE users.username = $1;
+        `, [username]);
+
+        const { rows: activities } = await client.query(`
+            SELECT activities.*, routine_activities.count, routine_activities.duration, routine_activities."routineId"
+            FROM activities
+            RIGHT JOIN routine_activities 
+            ON activities.id = routine_activities."activityId"
+        `);
+
+        for(const routine of routines) {
+            routine.activities = [];
+            for(const activity of activities) {
+                if(activity.routineId === routine.id) {
+                    delete activity.routineId;
+                    routine.activities.push(activity);
+                }
             }
-
-            activity = {
-                id: queriedRoutines[i].activityId,
-                name: queriedRoutines[i].activityName,
-                description: queriedRoutines[i].description,
-                count: queriedRoutines[i].count,
-                duration: queriedRoutines[i].duration
-            };
-            activities.push(activity);
-
-            if(queriedRoutines[i].id !== prevId && i !== 0){
-                routine = queriedRoutines[i-1];
-                delete routine.activityId;
-                delete routine.description;
-                delete routine.duration;
-                delete routine.count;
-                delete routine.activityName;
-                routine.activities = activities;
-                routines.push(routine);
-                activities = [];
-            }
-
-            prevId = queriedRoutines[i].id;
         }
 
-
         return routines;
+
     } catch (error) {
         throw error;
     }
+
 };
 
 const getPublicRoutinesByUser = async ({username}) => {
+
     try {
-        const { rows : queriedRoutines } = await client.query(`
-            SELECT  *
-            FROM routines r
-            INNER JOIN 
-                (SELECT duration, 
-                count, 
-                "routineId" AS id, 
-                "activityId"
-                FROM routine_activities) ra
-            ON (r.id = ra.id)
-            INNER JOIN 
-                (SELECT id AS "activityId", 
-                name AS "activityName", 
-                description
-                from activities) a
-            ON (ra."activityId" = a."activityId")
-            INNER JOIN 
-                (SELECT  
-                id AS "creatorId",
-                username AS "creatorName"
-                FROM users) u
-            ON (r."creatorId" = u."creatorId")
-            WHERE "creatorName" = $1
-            AND "isPublic" = true
-        ;`,[username]);
 
-        
-        const routines = [];
-        let prevId = 0;
-        let activities = [];
-        let activity = {};
-        let routine = {};
-        for(let i = 0; i < queriedRoutines.length; i++){
-            if(!queriedRoutines[i].activityId || i === queriedRoutines.length-1) {
-                routine = queriedRoutines[i]
-                delete routine.activityId;
-                delete routine.description;
-                delete routine.duration;
-                delete routine.count;
-                delete routine.activityName;
-                routine.activities = activities;
-                routines.push(routine);
+        const { rows: routines } = await client.query(`
+            SELECT routines.*, users.username AS "creatorName"
+            FROM routines
+            JOIN users
+            ON routines."creatorId" = users.id
+            WHERE users.username = $1
+            AND routines."isPublic" = 'true';
+        `, [username]);
+
+        const { rows: activities } = await client.query(`
+            SELECT activities.*, routine_activities.count, routine_activities.duration, routine_activities."routineId"
+            FROM activities
+            RIGHT JOIN routine_activities 
+            ON activities.id = routine_activities."activityId"
+        `);
+
+        for(const routine of routines) {
+            routine.activities = [];
+            for(const activity of activities) {
+                if(activity.routineId === routine.id) {
+                    delete activity.routineId;
+                    routine.activities.push(activity);
+                }
             }
-
-            activity = {
-                id: queriedRoutines[i].activityId,
-                name: queriedRoutines[i].activityName,
-                description: queriedRoutines[i].description,
-                count: queriedRoutines[i].count,
-                duration: queriedRoutines[i].duration
-            };
-            activities.push(activity);
-
-            if(queriedRoutines[i].id !== prevId && i !== 0){
-                routine = queriedRoutines[i-1];
-                delete routine.activityId;
-                delete routine.description;
-                delete routine.duration;
-                delete routine.count;
-                delete routine.activityName;
-                routine.activities = activities;
-                routines.push(routine);
-                activities = [];
-            }
-
-            prevId = queriedRoutines[i].id;
         }
 
-
         return routines;
+
     } catch (error) {
         throw error;
     }
+
 };
 
 const getPublicRoutinesByActivity = async ({id: activityId}) => {
+
     try {
-        const { rows : queriedRoutines } = await client.query(`
-            SELECT  *
-            FROM routines r
-            INNER JOIN 
-                (SELECT duration, 
-                count, 
-                "routineId" AS id, 
-                "activityId"
-                FROM routine_activities) ra
-            ON (r.id = ra.id)
-            INNER JOIN 
-                (SELECT id AS "activityId", 
-                name AS "activityName", 
-                description
-                from activities) a
-            ON (ra."activityId" = a."activityId")
-            INNER JOIN 
-                (SELECT  
-                id AS "creatorId",
-                username AS "creatorName"
-                FROM users) u
-            ON (r."creatorId" = u."creatorId")
-            WHERE ra."activityId" = $1
-            AND "isPublic" = true
-        ;`,[activityId]);
 
-        
-        const routines = [];
-        let prevId = 0;
-        let activities = [];
-        let activity = {};
-        let routine = {};
-        for(let i = 0; i < queriedRoutines.length; i++){
-            // remember that you have an edge case when i = 0
-            // and when i = length
-            //
-            if(queriedRoutines[i].id !== prevId && i !== 0){
-                //we need to put routine inside the routines array
-                routine = queriedRoutines[i-1];
-                delete routine.activityId;
-                delete routine.description;
-                delete routine.duration;
-                delete routine.count;
-                delete routine.activityName;
-                routine.activities = activities;
-                routines.push(routine);
-                activities = [];
-                
-                //common steps between cases
-            }
-            activity = {
-                id: queriedRoutines[i].activityId,
-                name: queriedRoutines[i].activityName,
-                description: queriedRoutines[i].description,
-                count: queriedRoutines[i].count,
-                duration: queriedRoutines[i].duration
-            };
-            activities.push(activity);
-            //non edge-case
-          //  if(queriedroutines[i].id === previd){
-          //      activity = {
-          //          id: queriedroutines[i].activityid,
-          //          name: queriedroutines[i].name,
-          //          description: queriedroutines[i].description
-          //      }
-          //      activities.push(activity);
-          //  }
+        const { rows: routineActivities } = await client.query(`
+            SELECT "routineId"
+            FROM routine_activities
+            WHERE "activityId" = $1
+        `, [activityId]);
 
-            if(i === queriedRoutines.length-1){
-                routine = queriedRoutines[i];
-                delete routine.activityId;
-                delete routine.activityName;
-                delete routine.description;
-                delete routine.duration;
-                delete routine.count;
-                routine.activities = activities;
-                routines.push(routine);
+        if (!routineActivities.length) {
+            throw Error("There are no routines with this activity");
+        }
+
+        const routineActivityIdString = routineActivities.map(({routineId}) => routineId ).join(", ")
+
+        const { rows: routines } = await client.query(`
+            SELECT routines.*, users.username AS "creatorName"
+            FROM routines
+            JOIN users
+            ON routines."creatorId" = users.id
+            WHERE routines.id 
+            IN (${routineActivityIdString});
+        `);
+
+        const { rows: activities } = await client.query(`
+            SELECT activities.*, routine_activities.count, routine_activities.duration, routine_activities."routineId"
+            FROM activities
+            RIGHT JOIN routine_activities 
+            ON activities.id = routine_activities."activityId"
+            WHERE routine_activities."routineId"
+            IN (${routineActivityIdString})
+        `);
+
+        for(const routine of routines) {
+            routine.activities = [];
+            for(const activity of activities) {
+                if(activity.routineId === routine.id) {
+                    delete activity.routineId;
+                    routine.activities.push(activity);
+                }
             }
-            prevId = queriedRoutines[i].id;
         }
 
         return routines;
+
     } catch (error) {
         throw error;
     }
+
 };
 
 const updateRoutine = async ({id, ...fields }) => {
@@ -445,6 +262,7 @@ const updateRoutine = async ({id, ...fields }) => {
     } catch (error) {
         throw error;
     }
+
 };
 
 const getRoutineById = async (id) => {
