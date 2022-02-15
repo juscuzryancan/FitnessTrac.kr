@@ -234,21 +234,20 @@ const getPublicRoutinesByActivity = async ({id: activityId}) => {
 };
 
 const updateRoutine = async ({id, ...fields }) => {
+
     const fieldKeys = Object.keys(fields);
 
+    if (fieldKeys.length === 0) { 
+        return; 
+    }
+
     const setString = fieldKeys.map((fieldName, index) => {
-        if (fieldName === 'isPublic'){
-            fieldName = '"isPublic"'
-        }
-        return `${fieldName}=$${index+1}`
+        return `"${fieldName}"=$${index+1}`
     }).join(', ');
 
     const setValues = Object.values(fields);
     setValues.push(id);
 
-    if (fieldKeys.length === 0) { 
-        return; 
-    }
 
     try {
         const { rows: [routine] } = await client.query(`
@@ -266,19 +265,26 @@ const updateRoutine = async ({id, ...fields }) => {
 };
 
 const getRoutineById = async (id) => {
+
     try {
+
         const { rows: [ routine ] } = await client.query(`
             SELECT * FROM routines
             WHERE id = $1;
         `, [id]);
+
         return routine;
+
     } catch (error) {
         throw error;
     }
+
 }
 
 const destroyRoutine = async (id) => {
+
     try {
+
         const { rows: [routine] } = await client.query(`
            DELETE FROM routines
            WHERE id=$1
@@ -289,10 +295,13 @@ const destroyRoutine = async (id) => {
            DELETE FROM routine_activities
            WHERE "routineId"=$1;
         `, [id]);
+
         return routine;
+
     } catch (error) {
         throw error;
     }
+
 }
 
 module.exports = {
