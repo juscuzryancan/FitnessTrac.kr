@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { getActivities, getUserData } from './api'
 
-import { Login, Header, Activities, Routines, MyRoutines } from './Components'
-import { Authentication, Home } from './Pages'
+import { Login, Header, Activities, Routines, MyRoutines, AuthenticationForm } from './Components'
 
 const App = () => {
   const [token, setToken] = useState(() => {
@@ -55,9 +54,9 @@ const App = () => {
     <Router>
         <Header token={token} setToken={setToken}/>
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/authentication' element={<Authentication setToken={setToken} />} />
-          <Route path='/activities' element={<Activities activities={activities} setActivities={setActivities} />}  />
+          <Route path='/' element={<div></div>} />
+          <Route path='/authentication/:method' element={<AuthenticationForm setToken={setToken} setUser={setUser} />} />
+          <Route path='/activities' element={<Activities activities={activities} setActivities={setActivities} />} />
           <Route path='/routines' element={<Routines />} />
           <Route path='/myroutines' element={<MyRoutines activities={activities} />} />
         </Routes>

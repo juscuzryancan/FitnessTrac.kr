@@ -51,12 +51,14 @@ return (
                         placeholder='Activity Description' />
                     <button type='submit'>Submit</button>
                 </form>}
+            <h2>Activities</h2>
             {
                 activities.length > 0 && activities.map((activity) => {
                     return (
                         <Activity key={activity.id} activity={activity} />
                     );
-                })}
+                })
+            }
         </div>
     );
 }
