@@ -27,8 +27,12 @@ server.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 })
 
-server.use((err, req, res, next) => {
-    res.send(err);
+server.use(({name, message}, req, res, next) => {
+  res.status(500);
+  res.send({
+    name,
+    message
+  });
 });
 
 server.listen(PORT, () => {

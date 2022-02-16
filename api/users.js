@@ -29,9 +29,27 @@ router.post('/register', async (req, res, next) => {
 });
 
 router.post('/login', async (req, res, next) => {
+    const { username, password } = req.body;
+
+    if(!username || !password) {
+        next({
+            name: "MissingFieldError",
+            message: "You must provide a username and a password"
+        })
+        return;
+    }
+
     try {
-        const { username, password } = req.body;
         const user = await getUser({username, password});
+
+        if(!user) {
+            next({
+                name: "IncorrectCredentialsError",
+                message: "Incorrect username or password"
+            });
+            return;
+        }
+
         const token = jwt.sign(user, JWT_SECRET);
         res.send({token});
     } catch (error) {
