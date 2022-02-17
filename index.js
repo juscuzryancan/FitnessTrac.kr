@@ -28,11 +28,7 @@ server.use((req, res, next) => {
 })
 
 server.use(({name, message}, req, res, next) => {
-  res.status(500);
-  res.send({
-    name,
-    message
-  });
+  res.send({name, message});
 });
 
 server.listen(PORT, () => {
