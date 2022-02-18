@@ -4,7 +4,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 
 const { JWT_SECRET } = process.env;
-const { createUser, getUser } = require('../db/users');
+const { createUser, getUser, getUserByUsername } = require('../db/users');
 const { getPublicRoutinesByUser } = require('../db/routines');
 const { requireUser } = require('./utils');
 
@@ -13,18 +13,20 @@ router.post('/register', async (req, res, next) => {
         const { username, password } = req.body;
 
         if (password.length < 8) {
-            return next({message: 'Password Too Short!'});
+            next({message: 'Password Too Short!'});
+            return;
         }
 
-        const dupeUser = await getUser({username, password});
+        const dupeUser = await getUserByUsername(username);
         if (dupeUser) {
-            return next({message: 'A user by that username already exists'});
+            next({message: 'A user by that username already exists'});
+            return;
         }
 
         const user = await createUser({username, password});
         res.send({user});
     } catch (error) {
-        next(error)
+        next(error);
     }
 });
 

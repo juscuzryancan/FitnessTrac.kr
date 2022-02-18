@@ -48,8 +48,21 @@ const getUserById = async (id) => {
     }
 };
 
+const getUserByUsername = async (username) => {
+    try {
+        const { rows: [user] } = await client.query(`
+            SELECT id FROM users
+            WHERE username = $1
+        `, [username])
+        return user;
+    } catch (e) {
+        throw e;
+    }
+}
+
 module.exports = {
     createUser,
     getUser,
-    getUserById
+    getUserById,
+    getUserByUsername
 };
