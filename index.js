@@ -17,6 +17,7 @@ server.use(express.urlencoded({
 
 const path = require("path");
 
+server.use(express.static(path.join(__dirname, "build")))
 
 const { PORT } = process.env;
 
