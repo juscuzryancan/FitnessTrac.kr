@@ -1,4 +1,4 @@
-import './Header.css';
+import './styles.css'
 import { useNavigate } from 'react-router';
 import HamburgerIcon from '../HamburgerIcon';
 import { useState } from 'react';
@@ -22,7 +22,7 @@ const Header = ({
             {token && <h3> Welcome, {user?.username}</h3>}
             <button className='header-button' onClick={() => { navigate('/routines') }}>Routines</button>
             <button className='header-button' onClick={() => { navigate('/activities') }} >Activities</button>
-            {token && <button className='header-button' onClick={() => { navigate('/myaccount') }} >My Account</button>}
+            {token && <button className='header-button' onClick={() => { navigate('/profile') }} >My Account</button>}
             {(!token) ?
                 <button className='header-button' onClick={() => { navigate('/authentication/login') }} >Login/Register</button>
                 : <button onClick={handleLogout} >Logout</button>}

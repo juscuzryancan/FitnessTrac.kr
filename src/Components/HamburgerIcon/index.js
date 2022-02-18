@@ -1,4 +1,4 @@
-import './HamburgerIcon.css';
+import './styles.css';
 const HamburgerIcon = () => {
 	return (
 		<svg className="hamburger-icon" viewBox="0 0 100 80" width="40" height="40">

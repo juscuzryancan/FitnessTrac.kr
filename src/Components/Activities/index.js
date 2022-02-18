@@ -1,18 +1,29 @@
 import {useState, useEffect} from 'react';
-import './Activities.css';
-import { Activity } from '..';
+import './styles.css';
+import { Activity, AddActivity } from '../';
+import axios from 'axios';
 
 import {
     getActivities,
     createActivity
 } from '../../api'
 
-const Activities = (props) => {
-    const { token, activities, setActivities } = props;
-    const [newName, setNewName] = useState('');
-    const [newDescription, setNewDescription] = useState('');
+const Activities = ({token}) => {
+    const [activities, setActivities] = useState([]);
     const [error, setError] = useState('');
-    console.log(activities);
+
+    useEffect(() => {
+        handleActivities();
+    }, [])
+
+    const handleActivities = async () => {
+        try {
+            const { data } = await axios.get('/api/activities')
+            setActivities(data)
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     const handleName = (e) => {
         setNewName(e.target.value);
@@ -35,22 +46,10 @@ const Activities = (props) => {
         setActivities(newActivities);
     }
 
-return (
+    return (
         <div className='activities'>
             {(error) && <div>{error}</div>}
-            {token &&
-                <form
-                    onSubmit={handleSubmit}>
-                    <input
-                        onChange={handleName}
-                        value={newName}
-                        placeholder='Activity Name' />
-                    <input
-                        onChange={handleDescription}
-                        value={newDescription}
-                        placeholder='Activity Description' />
-                    <button type='submit'>Submit</button>
-                </form>}
+            {token && <AddActivity token={token}/>}
             <h2>Activities</h2>
             {
                 activities.length > 0 && activities.map((activity) => {

@@ -3,15 +3,11 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { getActivities, getUserData } from './api'
 
-import { Login, Header, Activities, Routines, MyRoutines, AuthenticationForm } from './Components'
+import { Login, Header, Activities, Routines, MyRoutines, AuthenticationForm, Profile } from './Components'
 
 const App = () => {
   const [token, setToken] = useState(() => {
-    if (localStorage.getItem('token')) {
-      return localStorage.getItem('token');
-    } else {
-      return '';
-    }
+    return localStorage.getItem('token');
   });
   const [user, setUser] = useState({});
   const [activities, setActivities] = useState([]);
@@ -27,21 +23,6 @@ const App = () => {
     })();
   }, [])
 
-  useEffect(() => {
-    if (token) {
-      (async () => {
-        try {
-          const user = await getUserData(token);
-          setUser(user);
-        } catch (error) {
-          console.error(error);
-        }
-      })();
-    } else {
-      setUser({});
-    }
-  }, [token]);
-
   // TODO: 
   // swap each route into a page
   // this way i can just focus on customizing pages and displaying each individual page
@@ -56,8 +37,9 @@ const App = () => {
         <Routes>
           <Route path='/' element={<div></div>} />
           <Route path='/authentication/:method' element={<AuthenticationForm setToken={setToken} setUser={setUser} />} />
-          <Route path='/activities' element={<Activities activities={activities} setActivities={setActivities} />} />
-          <Route path='/routines' element={<Routines />} />
+          <Route path='/activities' element={<Activities token={token} activities={activities} setActivities={setActivities} />} />
+          <Route path='/routines' element={<Routines token={token} />} />
+          <Route path='/profile' element={<Profile />} />
         </Routes>
     </Router>
   );

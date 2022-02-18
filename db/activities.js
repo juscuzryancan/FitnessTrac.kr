@@ -26,7 +26,6 @@ const createActivity = async ({ name, description }) => {
 
 const updateActivity = async ({ id, ...fields}) => {
 
-
     const fieldKeys = Object.keys(fields);
 
     if (fieldKeys.length === 0) { 

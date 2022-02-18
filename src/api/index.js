@@ -33,6 +33,9 @@ const getUserData = async (token) => {
                 "Authorization": `Bearer ${token}`
             }
         })
+
+        console.log(user);
+
         return user;
     } catch (error) {
         throw error;
