@@ -19,10 +19,10 @@ const Header = ({
     return (
         <nav className='nav-bar'>
             <div className='nav-title' onClick={() => { navigate('/') }}>FitnessTrac.kr</div>
-            {token && <div> Account: {user?.username}</div>}
+            {token && <h3> Welcome, {user?.username}</h3>}
             <button className='header-button' onClick={() => { navigate('/routines') }}>Routines</button>
-            {token && <button className='header-button' onClick={() => { navigate('/myaccount') }} >My Account</button>}
             <button className='header-button' onClick={() => { navigate('/activities') }} >Activities</button>
+            {token && <button className='header-button' onClick={() => { navigate('/myaccount') }} >My Account</button>}
             {(!token) ?
                 <button className='header-button' onClick={() => { navigate('/authentication/login') }} >Login/Register</button>
                 : <button onClick={handleLogout} >Logout</button>}

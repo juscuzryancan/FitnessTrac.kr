@@ -16,7 +16,6 @@ server.use(express.urlencoded({
 }));
 
 const path = require("path");
-server.use(express.static(path.join(__dirname, "build")))
 
 
 const { PORT } = process.env;
@@ -28,7 +27,7 @@ server.use((req, res, next) => {
 })
 
 server.use(({name, message}, req, res, next) => {
-  res.send({name, message});
+  res.send({name, message, success: false});
 });
 
 server.listen(PORT, () => {

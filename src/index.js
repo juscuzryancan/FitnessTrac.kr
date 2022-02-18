@@ -52,13 +52,12 @@ const App = () => {
 
   return (
     <Router>
-        <Header token={token} setToken={setToken}/>
+        <Header token={token} user={user} setToken={setToken}/>
         <Routes>
           <Route path='/' element={<div></div>} />
           <Route path='/authentication/:method' element={<AuthenticationForm setToken={setToken} setUser={setUser} />} />
           <Route path='/activities' element={<Activities activities={activities} setActivities={setActivities} />} />
           <Route path='/routines' element={<Routines />} />
-          <Route path='/myroutines' element={<MyRoutines activities={activities} />} />
         </Routes>
     </Router>
   );

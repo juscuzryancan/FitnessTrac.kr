@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const AuthenticationForm = ({setToken}) => {
+const AuthenticationForm = ({setToken, setUser}) => {
 	const navigate = useNavigate();
 	const { method } = useParams()
 	const authenticationTitle = (method === "login") ? "Log In" : "Register";
@@ -17,17 +17,43 @@ const AuthenticationForm = ({setToken}) => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
+
+		if(method === "register" && userFields.password !== userFields.confirmPassword) {
+			setError("Passwords do not match");
+			return;
+		}
+
 		try {
-			const { data: {token} } = await axios.post(`/api/users/${method}`, userFields);
-			setToken(token);
-			localStorage.setItem('token', token);
+
+			const {data} = await axios.post(`/api/users/${method}`, userFields);
+
+			if (data.success === false) {
+				throw data;
+			}
+
 			setUserFields(blankUserFields);
-			navigate('/')
-		} catch ({message, response: { data: {message: responseError} } }) {
-			setError(responseError);
+			setError("");
+
+			if (method === "login") {
+				setToken(data.token);
+				localStorage.setItem('token', data.token);
+				const { data: userObject } = await axios.get('/api/users/me', {
+					headers: {
+						Authorization: `Bearer ${data.token}`
+					}
+				})
+				setUser(userObject);
+				navigate('/')
+			} else {
+				setError("Successful login, Please login")
+				navigate('/authentication/login')
+			}
+
+		} catch ({name, message}) {
+			console.error(`Name: ${name} Message: ${message}`)
+			setError(message)
 		}
 	}
-
 
 	return (
 		<div className="authentication-container">
