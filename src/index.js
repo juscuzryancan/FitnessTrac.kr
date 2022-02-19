@@ -1,43 +1,68 @@
 import { useEffect, useState, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import axios from 'axios';
 import { getActivities, getUserData } from './api'
 
 import { Login, Header, Activities, Routines, MyRoutines, AuthenticationForm, Profile } from './Components'
 
 const App = () => {
+  const [activities, setActivities] = useState([]);
   const [token, setToken] = useState(() => {
-    return localStorage.getItem('token');
+    return localStorage.getItem('token') || "";
   });
   const [user, setUser] = useState({});
-  const [activities, setActivities] = useState([]);
+
+
+  const handleUser = async () => {
+    try {
+      const {data: userObject} = await axios.get('/api/users/me', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      setUser(userObject);
+    } catch (e) {
+      console.error(e)
+    }
+  }
 
   useEffect(() => {
-    (async () => {
+    const handleActivities = async () => {
       try {
-        const fetchActivities = await getActivities();
-        setActivities(fetchActivities);
+        const { data } = await axios.get('/api/activities')
+        setActivities(data)
       } catch (error) {
         console.error(error);
       }
-    })();
+    }
+
+    if (token) {
+      handleUser();
+    }
+
+    handleActivities();
   }, [])
 
-  // TODO: 
-  // swap each route into a page
-  // this way i can just focus on customizing pages and displaying each individual page
-  // useQuery will replace all of api index functions
-  // as i customize each item i will have to go from inside to outside
-  // this way i can specify each individual component first and then i
-  // can apply the correct css for each component
+  useEffect(() => {
+    if(!token) {
+      setUser({});
+      return;
+    }
+
+    handleUser();
+  }, [token])
 
   return (
     <Router>
         <Header token={token} user={user} setToken={setToken}/>
         <Routes>
-          <Route path='/' element={<div></div>} />
-          <Route path='/authentication/:method' element={<AuthenticationForm setToken={setToken} setUser={setUser} />} />
-          <Route path='/activities' element={<Activities token={token} activities={activities} setActivities={setActivities} />} />
+          <Route path='/' element={<div>
+            <h2>Welcome to Fitness Trac.kr</h2>
+            <p>Keep track of your exercise routines, and share it with others</p>
+          </div>} />
+          <Route path='/authentication/:method' element={<AuthenticationForm setToken={setToken} setUser={setUser} handleUser={handleUser}/>} />
+          <Route path='/activities' element={<Activities activities={activities} setActivities={setActivities} token={token} activities={activities} setActivities={setActivities} />} />
           <Route path='/routines' element={<Routines token={token} />} />
           <Route path='/profile' element={<Profile />} />
         </Routes>

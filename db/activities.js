@@ -16,8 +16,14 @@ const createActivity = async ({ name, description }) => {
         const { rows: [activity] } = await client.query(`
             INSERT INTO activities(name, description)
             VALUES ($1, $2)
+            ON CONFLICT (name) DO NOTHING
             RETURNING *; 
         `, [name, description]);
+
+        if (!activity) {
+            throw {name: "ActivityError", message: "Activity already exists with this name"}
+        }
+
         return activity;
     } catch (error) {
         throw error;

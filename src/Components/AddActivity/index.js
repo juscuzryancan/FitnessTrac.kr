@@ -7,13 +7,18 @@ const AddActivity = ({token, activities, setActivities}) => {
 		name: "",
 		description: ""
 	}
+	const [error, setError] = useState("");
 	const [activity, setActivity] = useState(blankActivity);
 
 	const handleAdd = async (e) => {
 		e.preventDefault();
 		try {
-			const {data: newActivity} = await axios.post('/api/activities', activity, {headers: {Authorization: `Bearer ${token}`}})
-			setActivities([...activities, newActivity]);
+			const {data} = await axios.post('/api/activities', activity, {headers: {Authorization: `Bearer ${token}`}})
+			if (data.success === false) {
+				setError(data.message);
+				return;
+			}
+			setActivities([...activities, data]);
 			setActivity(blankActivity);
 		} catch (e) {
 			console.error(e);
@@ -23,6 +28,7 @@ const AddActivity = ({token, activities, setActivities}) => {
 	return (
 		<>
 			<h2>Add Activity</h2>
+			{error && <div>{error}</div>}
 			<ActivityForm activity={activity} setActivity={setActivity} handleSubmit={handleAdd} />
 		</>
 	)

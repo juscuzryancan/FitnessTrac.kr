@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const AuthenticationForm = ({setToken, setUser}) => {
+const AuthenticationForm = ({setToken, handleUser}) => {
 	const navigate = useNavigate();
 	const { method } = useParams()
 	const authenticationTitle = (method === "login") ? "Log In" : "Register";
@@ -37,12 +37,6 @@ const AuthenticationForm = ({setToken, setUser}) => {
 			if (method === "login") {
 				setToken(data.token);
 				localStorage.setItem('token', data.token);
-				const { data: userObject } = await axios.get('/api/users/me', {
-					headers: {
-						Authorization: `Bearer ${data.token}`
-					}
-				})
-				setUser(userObject);
 				navigate('/')
 			} else {
 				setError("Successful login, Please login")

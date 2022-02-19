@@ -10,7 +10,6 @@ import {
 
 const Activities = ({token}) => {
     const [activities, setActivities] = useState([]);
-    const [error, setError] = useState('');
 
     useEffect(() => {
         handleActivities();
@@ -25,31 +24,9 @@ const Activities = ({token}) => {
         }
     }
 
-    const handleName = (e) => {
-        setNewName(e.target.value);
-    }
-
-    const handleDescription = (e) => {
-        setNewDescription(e.target.value);
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const activity = await createActivity(token, newName, newDescription);
-        if (activity.error) {
-            setError(activity.error);
-            return;
-        }
-        setNewName('');
-        setNewDescription('');
-        const newActivities = [...activities, activity];
-        setActivities(newActivities);
-    }
-
     return (
         <div className='activities'>
-            {(error) && <div>{error}</div>}
-            {token && <AddActivity token={token}/>}
+            {token && <AddActivity activities={activities} setActivities={setActivities} token={token}/>}
             <h2>Activities</h2>
             {
                 activities.length > 0 && activities.map((activity) => {
