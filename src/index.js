@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 import { getActivities, getUserData } from './api'
-
 import { Login, Header, Activities, Routines, MyRoutines, AuthenticationForm, Profile } from './Components'
 
 const App = () => {
@@ -16,7 +15,7 @@ const App = () => {
 
   const handleUser = async () => {
     try {
-      const {data: userObject} = await axios.get('/api/users/me', {
+      const { data: userObject } = await axios.get('/api/users/me', {
         headers: {
           Authorization: `Bearer ${token}`
         }

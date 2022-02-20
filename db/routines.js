@@ -197,6 +197,7 @@ const getPublicRoutinesByActivity = async ({id: activityId}) => {
         }
 
         const routineActivityIdString = routineActivities.map(({routineId}) => routineId ).join(", ")
+        const routineActivityIds = routineActivities.map(({routineId}) => routineId);
 
         const { rows: routines } = await client.query(`
             SELECT routines.*, users.username AS "creatorName"
@@ -204,7 +205,7 @@ const getPublicRoutinesByActivity = async ({id: activityId}) => {
             JOIN users
             ON routines."creatorId" = users.id
             WHERE routines.id 
-            IN (${routineActivityIdString});
+            IN (${routineActivityIds});
         `);
 
         const { rows: activities } = await client.query(`
@@ -225,6 +226,8 @@ const getPublicRoutinesByActivity = async ({id: activityId}) => {
                 }
             }
         }
+
+        console.log("routines", util.inspect(routines, true, 5, true));
 
         return routines;
 

@@ -3,26 +3,7 @@ import './styles.css';
 import { Activity, AddActivity } from '../';
 import axios from 'axios';
 
-import {
-    getActivities,
-    createActivity
-} from '../../api'
-
-const Activities = ({token}) => {
-    const [activities, setActivities] = useState([]);
-
-    useEffect(() => {
-        handleActivities();
-    }, [])
-
-    const handleActivities = async () => {
-        try {
-            const { data } = await axios.get('/api/activities')
-            setActivities(data)
-        } catch (error) {
-            console.error(error);
-        }
-    }
+const Activities = ({token, activities, setActivities}) => {
 
     return (
         <div className='activities'>
