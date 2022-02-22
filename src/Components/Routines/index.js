@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import './Routines.css';
 
 import { getRoutines } from '../../api'
-import { Activity } from '..';
+import { Activity, AddRoutine } from '..';
 
 const Routine = ({routine}) => {
     const {
@@ -32,7 +32,7 @@ const Routine = ({routine}) => {
     )
 }
 
-const Routines = () => {
+const Routines = ({token}) => {
     const [routines, setRoutines] = useState([]);
     
     const handleRoutines = async () => {
@@ -47,6 +47,7 @@ const Routines = () => {
     
     return (
         <div className="routines">
+            {token && <AddRoutine />}
             <h2>Routines</h2>
             {routines.length > 0 &&
                 routines.map((routine) => {

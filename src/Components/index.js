@@ -8,3 +8,4 @@ export { default as RoutineForm } from './RoutineForm';
 export { default as ActivityForm } from './ActivityForm';
 export { default as Profile } from './Profile';
 export { default as AddActivity } from './AddActivity';
+export { default as AddRoutine } from './AddRoutine';
