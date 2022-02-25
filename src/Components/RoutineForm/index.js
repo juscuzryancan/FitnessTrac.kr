@@ -7,9 +7,9 @@ const RoutineForm = ({routine, setRoutine, handleSubmit, activities}) => {
 			<label>Public:</label>
 			<input value={routine.isPublic} type="checkbox" onChange={(e) => {setRoutine({...routine, isPublic: e.target.checked})}}/>
 			<select>
-				{activities.map(({name}) => {
+				{activities.map(({id, name}) => {
 					return (
-						<option value={name}>{name}</option>
+						<option key={id} value={name}>{name}</option>
 					)
 				})}	
 			</select>

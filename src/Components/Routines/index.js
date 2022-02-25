@@ -47,7 +47,7 @@ const Routines = ({token, activities}) => {
     
     return (
         <div className="routines">
-            {token && <AddRoutine activities={activities} token={token}/>}
+            {token && <AddRoutine routines={routines} activities={activities} token={token}/>}
             <h2>Routines</h2>
             {routines.length > 0 &&
                 routines.map((routine) => {

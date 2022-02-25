@@ -6,13 +6,11 @@ import { getActivities, getUserData } from './api'
 import { Login, Header, Activities, Routines, MyRoutines, AuthenticationForm, Profile } from './Components'
 
 const App = () => {
-  const [activities, setActivities] = useState([]);
   const [token, setToken] = useState(() => {
     return localStorage.getItem('token') || "";
   });
   const [user, setUser] = useState({});
-
-  console.log(activities);
+  const [activities, setActivities] = useState([]);
 
   const handleUser = async () => {
     try {
