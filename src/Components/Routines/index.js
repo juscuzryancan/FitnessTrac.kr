@@ -32,7 +32,7 @@ const Routine = ({routine}) => {
     )
 }
 
-const Routines = ({token}) => {
+const Routines = ({token, activities}) => {
     const [routines, setRoutines] = useState([]);
     
     const handleRoutines = async () => {
@@ -47,7 +47,7 @@ const Routines = ({token}) => {
     
     return (
         <div className="routines">
-            {token && <AddRoutine />}
+            {token && <AddRoutine activities={activities} token={token}/>}
             <h2>Routines</h2>
             {routines.length > 0 &&
                 routines.map((routine) => {

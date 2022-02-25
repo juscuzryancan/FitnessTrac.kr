@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { getAllPublicRoutines, createRoutine, updateRoutine, getRoutineById, destroyRoutine } = require('../db/routines');
+const { getRoutineByName, getAllPublicRoutines, createRoutine, updateRoutine, getRoutineById, destroyRoutine } = require('../db/routines');
 const { addActivityToRoutine } = require('../db/routine_activities');
 const { requireUser } = require('./utils');
 
@@ -17,6 +17,16 @@ router.get('/', async (req, res, next) => {
 router.post('/', requireUser, async (req, res, next) => {
     try {
         const { isPublic, name, goal } = req.body;
+
+        const dupeRoutine = await getRoutineByName(name)
+        if(dupeRoutine) {
+            next({
+                name: "RoutineAlreadyExists",
+                message: "A routine with this name already exists"
+            })
+            return;
+        }
+
         const routine = await createRoutine({creatorId: req.user.id, isPublic, name, goal});
         res.send(routine);
     } catch (error) {

@@ -12,6 +12,7 @@ const App = () => {
   });
   const [user, setUser] = useState({});
 
+  console.log(activities);
 
   const handleUser = async () => {
     try {
@@ -62,7 +63,7 @@ const App = () => {
           </div>} />
           <Route path='/authentication/:method' element={<AuthenticationForm setToken={setToken} setUser={setUser} handleUser={handleUser}/>} />
           <Route path='/activities' element={<Activities activities={activities} setActivities={setActivities} token={token} activities={activities} setActivities={setActivities} />} />
-          <Route path='/routines' element={<Routines token={token} />} />
+          <Route path='/routines' element={<Routines token={token} activities={activities}/>} />
           <Route path='/profile' element={<Profile />} />
         </Routes>
     </Router>

@@ -228,6 +228,20 @@ const destroyRoutine = async (id) => {
 
 }
 
+const getRoutineByName = async (name) => {
+    try {
+        const {rows: [routine]} = await client.query(`
+            SELECT *
+            FROM routines
+            WHERE name = $1
+        `, [name])
+
+        return routine;
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     createRoutine,
     getRoutinesWithoutActivities,
@@ -239,4 +253,5 @@ module.exports = {
     getPublicRoutinesByActivity,
     getRoutineById,
     destroyRoutine,
+    getRoutineByName
 };
