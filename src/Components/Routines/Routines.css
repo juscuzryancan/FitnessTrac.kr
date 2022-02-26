@@ -18,6 +18,11 @@
 	border-bottom: 1px solid var(--tertiary-color);
 }
 
+.routine-header:hover {
+	cursor: pointer;
+	border: 1px solid black;
+}
+
 .routine * {
 	background-color: var(--secondary-color);
 }

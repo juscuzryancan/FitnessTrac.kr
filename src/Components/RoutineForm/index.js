@@ -6,13 +6,6 @@ const RoutineForm = ({routine, setRoutine, handleSubmit, activities}) => {
 			<input required value={routine.goal} placeholder="Routine Goal" onChange={(e) => {setRoutine({...routine, goal: e.target.value})}}/>
 			<label>Public:</label>
 			<input value={routine.isPublic} type="checkbox" onChange={(e) => {setRoutine({...routine, isPublic: e.target.checked})}}/>
-			<select>
-				{activities.map(({id, name}) => {
-					return (
-						<option key={id} value={name}>{name}</option>
-					)
-				})}	
-			</select>
 			<button type="submit">Submit</button>
 		</form>
 	)
