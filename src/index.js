@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 import { getActivities, getUserData } from './api'
-import { Login, Header, Activities, Routines, MyRoutines, AuthenticationForm, Profile } from './Components'
+import { Login, Header, SingleRoutine, Activities, Routines, MyRoutines, AuthenticationForm, Profile } from './Components'
 
 const App = () => {
   const [token, setToken] = useState(() => {
@@ -11,6 +11,7 @@ const App = () => {
   });
   const [user, setUser] = useState({});
   const [activities, setActivities] = useState([]);
+  const [routines, setRoutines] = useState([]);
 
   const handleUser = async () => {
     try {
@@ -24,6 +25,15 @@ const App = () => {
       console.error(e)
     }
   }
+
+    const handleRoutines = async () => {
+      try {
+        const { data: fetchedRoutines } = await axios.get('/api/routines');
+        setRoutines(fetchedRoutines);
+      } catch (error) {
+        console.error("error", error)
+      }
+    }
 
   useEffect(() => {
     const handleActivities = async () => {
@@ -39,6 +49,7 @@ const App = () => {
       handleUser();
     }
 
+    handleRoutines();
     handleActivities();
   }, [])
 
@@ -61,7 +72,8 @@ const App = () => {
           </div>} />
           <Route path='/authentication/:method' element={<AuthenticationForm setToken={setToken} setUser={setUser} handleUser={handleUser}/>} />
           <Route path='/activities' element={<Activities activities={activities} setActivities={setActivities} token={token} activities={activities} setActivities={setActivities} />} />
-          <Route path='/routines' element={<Routines token={token} activities={activities}/>} />
+          <Route path='/routines' element={<Routines token={token} activities={activities} routines={routines}/>} />
+          <Route path='/routines/:routineId' element={<SingleRoutine token={token} activities={activities} routines={routines} setRoutines={setRoutines}/>} routines={routines}/>
           <Route path='/profile' element={<Profile />} />
         </Routes>
     </Router>
