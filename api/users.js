@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = process.env;
 const { createUser, getUser, getUserByUsername } = require('../db/users');
 const { getPublicRoutinesByUser } = require('../db/routines');
+const { getAllRoutinesByUser } = require('../db/routines')
 const { requireUser } = require('./utils');
 
 router.post('/register', async (req, res, next) => {
@@ -74,10 +75,15 @@ router.get('/me', requireUser, async (req, res, next) => {
 });
 
 router.get('/:username/routines', async (req, res, next) => {
+    const { username } = req.params;
     try {
-        const {username} = req.params;
-        const routines = await getPublicRoutinesByUser({username})
-        res.send(routines);
+        if (req?.user?.username === username) {
+            const routines = await getAllRoutinesByUser({username});
+            res.send(routines);
+        } else {
+            const routines = await getPublicRoutinesByUser({ username })
+            res.send(routines);
+        }
     } catch (error) {
         next(error);
     }

@@ -20,4 +20,3 @@ const Routines = ({token, activities, routines, setRoutines}) => {
 }
             
 export default Routines;
-            
