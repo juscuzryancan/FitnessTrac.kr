@@ -76,18 +76,16 @@ router.get('/me', requireUser, async (req, res, next) => {
 
 router.get('/:username/routines', async (req, res, next) => {
     const { username } = req.params;
+    let _username = (req.user) ? req.user.username : null;
     try {
-        if (req?.user?.username === username) {
-            console.log("here")
+        if (_username === username) {
             const routines = await getAllRoutinesByUser({username});
             res.send(routines);
         } else {
-            console.log("here2")
             const routines = await getPublicRoutinesByUser({ username })
             res.send(routines);
         }
     } catch (error) {
-        console.log(error);
         next(error);
     }
 });

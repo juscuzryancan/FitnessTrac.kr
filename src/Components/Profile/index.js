@@ -1,14 +1,17 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Routine } from '../';
+import { Routine, AddRoutine } from '../';
 import './styles.css';
 
-const Profile = ({user, token}) => {
+const Profile = ({user, token, setRoutines}) => {
 	const [userRoutines, setUserRoutines] = useState([]);
 
 	const handleUserRoutines = async () => {
 		try {
 			const { data } = await axios.get(`/api/users/${user.username}/routines`);
+			if(data.success === false) {
+				return;
+			}
 			setUserRoutines(data);
 		} catch (error) {
 			console.error(error);
@@ -17,9 +20,9 @@ const Profile = ({user, token}) => {
 
 	useEffect(() => {
 		handleUserRoutines();
-	}, []);
+	}, [user]);
 
-	if(!token) {
+	if(userRoutines.length === 0) {
 		return (
 			<div>
 				...Loading
@@ -30,6 +33,7 @@ const Profile = ({user, token}) => {
 	return (
 		<div className='profile'>
 			<div>
+				{token && <AddRoutine setRoutines={setRoutines} routines={routines} activities={activities} token={token} />}
 				<h2>My Routines</h2>
 				{userRoutines.map((routine) => <Routine key={routine.id} routine={routine}/>)}
 			</div>
