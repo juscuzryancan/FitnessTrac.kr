@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Routine, AddRoutine } from '../';
 import './styles.css';
 
-const Profile = ({user, token, setRoutines}) => {
+const Profile = ({user, token, routines, setRoutines}) => {
 	const [userRoutines, setUserRoutines] = useState([]);
 
 	const handleUserRoutines = async () => {
@@ -33,7 +33,7 @@ const Profile = ({user, token, setRoutines}) => {
 	return (
 		<div className='profile'>
 			<div>
-				{token && <AddRoutine setRoutines={setRoutines} routines={routines} activities={activities} token={token} />}
+				{token && <AddRoutine setRoutines={setRoutines} routines={routines} token={token} />}
 				<h2>My Routines</h2>
 				{userRoutines.map((routine) => <Routine key={routine.id} routine={routine}/>)}
 			</div>
