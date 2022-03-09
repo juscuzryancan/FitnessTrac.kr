@@ -35,6 +35,13 @@ const getRoutinesWithoutActivities = async () => {
 };
 
 const addActivitiesToRoutines = async (routines) => {
+    if (routines.length === 0) {
+        throw {
+            name: "RoutinesNotFound",
+            message: "There are no routines found"
+        }
+    }
+
 	try {
 		const routineIdArray = routines.map((routine) => {
 			return routine.id

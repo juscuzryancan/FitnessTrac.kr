@@ -26,24 +26,25 @@ const App = () => {
     }
   }
 
-    const handleRoutines = async () => {
-      try {
-        const { data: fetchedRoutines } = await axios.get('/api/routines');
-        setRoutines(fetchedRoutines);
-      } catch (error) {
-        console.error("error", error)
-      }
+  const handleRoutines = async () => {
+    try {
+      const { data: fetchedRoutines } = await axios.get('/api/routines');
+      setRoutines(fetchedRoutines);
+    } catch (error) {
+      console.error("error", error)
     }
+  }
+
+  const handleActivities = async () => {
+    try {
+      const { data } = await axios.get('/api/activities')
+      setActivities(data)
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   useEffect(() => {
-    const handleActivities = async () => {
-      try {
-        const { data } = await axios.get('/api/activities')
-        setActivities(data)
-      } catch (error) {
-        console.error(error);
-      }
-    }
 
     if (token) {
       handleUser();
@@ -54,7 +55,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    if(!token) {
+    if (!token) {
       setUser({});
       return;
     }
@@ -64,18 +65,18 @@ const App = () => {
 
   return (
     <Router>
-        <Header token={token} user={user} setToken={setToken}/>
-        <Routes>
-          <Route path='/' element={<div>
-            <h2>Welcome to Fitness Trac.kr</h2>
-            <p>Keep track of your exercise routines, and share it with others</p>
-          </div>} />
-          <Route path='/authentication/:method' element={<AuthenticationForm setToken={setToken} setUser={setUser} handleUser={handleUser}/>} />
-          <Route path='/activities' element={<Activities activities={activities} setActivities={setActivities} token={token} activities={activities} setActivities={setActivities} />} />
-          <Route path='/routines' element={<Routines token={token} activities={activities} routines={routines}/>} />
-          <Route path='/routines/:routineId' element={<SingleRoutine token={token} activities={activities} routines={routines} setRoutines={setRoutines}/>} routines={routines}/>
-          <Route path='/profile' element={<Profile routines={routines} user={user} token={token} />} />
-        </Routes>
+      <Header token={token} user={user} setToken={setToken} />
+      <Routes>
+        <Route path='/' element={<div>
+          <h2>Welcome to Fitness Trac.kr</h2>
+          <p>Keep track of your exercise routines, and share it with others</p>
+        </div>} />
+        <Route path='/authentication/:method' element={<AuthenticationForm setToken={setToken} setUser={setUser} handleUser={handleUser} />} />
+        <Route path='/activities' element={<Activities activities={activities} setActivities={setActivities} token={token} />} />
+        <Route path='/routines' element={<Routines token={token} activities={activities} routines={routines} />} />
+        <Route path='/routines/:routineId' element={<SingleRoutine token={token} activities={activities} routines={routines} setRoutines={setRoutines} />} routines={routines} />
+        <Route path='/profile' element={<Profile routines={routines} user={user} token={token} />} />
+      </Routes>
     </Router>
   );
 }
