@@ -20,9 +20,32 @@ const SingleRoutine = ({routines}) => {
 		);
 	}
 
+
+	const {name, creatorName, goal, activities} = routine;
 	return (
 		<div className='single-routine'>
-			<Routine routine={routine} />		
+			<div className='routine-header'>
+				<div>
+					<h3>Routine Name: {name}</h3>
+					<h4>Creator: {creatorName}</h4>
+					<h4>Goal: {goal}</h4>
+				</div>
+				<div>
+					<button>Edit Routine Name/Goal</button>
+				</div>
+			</div>
+			<div className='routine-activities'>
+				{activities.map(({name}) => {
+					return (
+						<div>
+							<div>{name}</div>
+						</div>
+					);
+				})}
+			</div>
+			<div>
+				
+			</div>
 		</div>
 	)
 }

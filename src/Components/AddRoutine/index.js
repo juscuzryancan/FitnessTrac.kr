@@ -2,7 +2,7 @@ import {useState} from 'react';
 import axios from 'axios';
 import { RoutineForm } from '../';
 
-const AddRoutine = ({token, routines, setRoutines, activities}) => {
+const AddRoutine = ({token, routines, setRoutines, activities, handleRoutines}) => {
 	const blankRoutine = {
 		name: "",
 		goal: "",
@@ -10,6 +10,7 @@ const AddRoutine = ({token, routines, setRoutines, activities}) => {
 	}
 	const [error, setError] = useState("");
 	const [routine, setRoutine] = useState("");
+	console.log(routine);
 
 	const handleAdd = async (e) => {
 		e.preventDefault();
@@ -26,7 +27,7 @@ const AddRoutine = ({token, routines, setRoutines, activities}) => {
 				setError(data.message);
 				return;
 			}
-			setRoutines([...routines, data]);
+			await handleRoutines();
 			setRoutine(blankRoutine);
 		} catch (e) {
 			console.error(e);

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import {Activity} from '../';
-const Routine = ({routine}) => {
+const Routine = ({routine, children}) => {
 	const navigate = useNavigate();
 
 	const {
@@ -15,9 +15,7 @@ const Routine = ({routine}) => {
 
 	return (
 		<div className="routine">
-			<div className='routine-header' onClick={() => {
-				navigate(`/routines/${id}`)
-			}}>
+			<div className='routine-header'>
 				<h3>Routine Name: {name}</h3>
 				<h4>Creator: {creatorName}</h4>
 				<h4>Goal: {goal}</h4>
@@ -29,6 +27,7 @@ const Routine = ({routine}) => {
 					);
 				})}
 			</div>
+			{children}
 		</div>
 	)
 }
