@@ -3,14 +3,20 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Routine } from '../';
 
-const SingleRoutine = ({routines}) => {
+const SingleRoutine = ({routines, activities}) => {
 	const [routine, setRoutine] = useState(null);
 	const {routineId} = useParams();
+	console.log("routines in single routine", routines);
+	console.log("single routine",routine);
 
 	useEffect(() => {
-		const routineToFind = routines.find((routine) => {
+		let routineToFind = routines.find((routine) => {
 			return routine.id === routineId * 1;
 		});
+		if (!routineToFind) {
+			routineToFind = userRoutines
+		}
+		console.log("routine in effect", routineToFind)
 		setRoutine(routineToFind);
 	}, [routines]);
 
@@ -21,7 +27,7 @@ const SingleRoutine = ({routines}) => {
 	}
 
 
-	const {name, creatorName, goal, activities} = routine;
+	const {name, creatorName, goal, activities: routineActivities} = routine;
 	return (
 		<div className='single-routine'>
 			<div className='routine-header'>
@@ -35,17 +41,30 @@ const SingleRoutine = ({routines}) => {
 				</div>
 			</div>
 			<div className='routine-activities'>
-				{activities.map(({name}) => {
+				{routineActivities.map(({id, name}) => {
 					return (
-						<div>
+						<div key={id}>
 							<div>{name}</div>
 						</div>
 					);
 				})}
 			</div>
-			<div>
-				
-			</div>
+			<form>
+				<h2>Add Activity to this Routine</h2>
+				<select>
+				 	{activities.map((activity) => {
+						 if(routineActivities.find((elem) => activity.id === elem.id)) {
+							 return
+						 }
+						 return (
+							<option value={activity.id} key={activity.id}>
+								{activity.name}
+							</option>
+						 )
+					 })}
+				</select>
+				<button>Submit</button>
+			</form>
 		</div>
 	)
 }
