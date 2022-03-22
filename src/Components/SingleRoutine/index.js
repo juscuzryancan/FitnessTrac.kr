@@ -1,13 +1,25 @@
 import './SingleRoutine.css';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import { Routine } from '../';
 
-const SingleRoutine = ({routines, activities}) => {
+const SingleRoutine = ({routines, activities, userRoutines, token}) => {
 	const [routine, setRoutine] = useState(null);
+	const [formData, setFormData] = useState(null);
+	console.log(formData);
+	const blankFormData = {
+		activityId: -1,
+		count: 0,
+		duration: 0
+	}
 	const {routineId} = useParams();
 	console.log("routines in single routine", routines);
 	console.log("single routine",routine);
+
+	useEffect(() => {
+		setFormData(blankFormData)
+	}, [])
 
 	useEffect(() => {
 		let routineToFind = routines.find((routine) => {
@@ -26,6 +38,15 @@ const SingleRoutine = ({routines, activities}) => {
 		);
 	}
 
+	const handleAddActivityToRoutine = async (e) => {
+		e.preventDefault();
+		console.log("working")
+		try {
+
+		} catch (error) {
+			console.error(error)
+		}
+	}
 
 	const {name, creatorName, goal, activities: routineActivities} = routine;
 	return (
@@ -49,9 +70,10 @@ const SingleRoutine = ({routines, activities}) => {
 					);
 				})}
 			</div>
-			<form>
+			<form onSubmit={handleAddActivityToRoutine}>
 				<h2>Add Activity to this Routine</h2>
-				<select>
+				<select value={formData.activityId} onChange={(e) => setFormData({...formData, activityId: e.target.value})}>
+					<option value={-1}>Select an Activity</option>
 				 	{activities.map((activity) => {
 						 if(routineActivities.find((elem) => activity.id === elem.id)) {
 							 return
@@ -63,7 +85,11 @@ const SingleRoutine = ({routines, activities}) => {
 						 )
 					 })}
 				</select>
-				<button>Submit</button>
+				<label>Count: </label>
+				<input type="number" value={formData.count} onChange={(e) => setFormData({...formData, count: e.target.value})}/>
+				<label>Duration: </label>
+				<input type="number" value={formData.duration} onChange={(e) => setFormData({...formData, duration: e.target.value})}/>
+				<button type="submit">Submit</button>
 			</form>
 		</div>
 	)
