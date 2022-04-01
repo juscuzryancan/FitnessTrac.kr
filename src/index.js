@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 import { getActivities, getUserData } from './api'
-import { Login, Header, SingleRoutine, Activities, Routines, MyRoutines, AuthenticationForm, Profile } from './Components'
+import { EditActivity, Login, Header, SingleRoutine, Activities, Routines, MyRoutines, AuthenticationForm, Profile } from './Components'
 
 const App = () => {
   const [token, setToken] = useState(() => {
@@ -73,8 +73,11 @@ const App = () => {
         </div>} />
         <Route path='/authentication/:method' element={<AuthenticationForm setToken={setToken} setUser={setUser} handleUser={handleUser} />} />
         <Route path='/activities' element={<Activities activities={activities} setActivities={setActivities} token={token} />} />
+        <Route path='/activity/:activityId' element={<EditActivity activities={activities} setActivities={setActivities}/>} />
         <Route path='/routines' element={<Routines token={token} activities={activities} routines={routines} />} />
-        <Route path='/routines/:routineId' element={<SingleRoutine token={token} activities={activities} routines={routines} setRoutines={setRoutines} />} routines={routines} />
+        <Route path='/routines/:routineId' element={<SingleRoutine token={token} activities={activities} routines={routines} setRoutines={setRoutines} />} > 
+          <Route path='edit' element={<div>yes</div>}/>
+        </Route>
         <Route path='/profile' element={<Profile routines={routines} user={user} token={token} setRoutines={setRoutines} handleRoutines={handleRoutines}/>} />
       </Routes>
     </Router>

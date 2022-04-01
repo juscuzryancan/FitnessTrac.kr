@@ -11,3 +11,4 @@ export { default as Profile } from './Profile';
 export { default as AddActivity } from './AddActivity';
 export { default as AddRoutine } from './AddRoutine';
 export { default as SingleRoutine } from './SingleRoutine';
+export { default as EditActivity } from './EditActivity';

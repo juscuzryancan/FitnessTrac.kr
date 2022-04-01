@@ -13,9 +13,7 @@ const Routines = ({token, activities, routines, setRoutines}) => {
             {routines?.length > 0 &&
                 routines.map((routine) => {
                     return (
-                        <Routine key={routine.id} routine={routine} >
-                            <button onClick={() => navigate(`/routines/${routine.id}`)}>View Routine</button>
-                        </Routine>
+                        <Routine key={routine.id} routine={routine} />
                     );
                 })}
         </div>

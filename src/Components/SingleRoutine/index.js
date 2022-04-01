@@ -1,6 +1,6 @@
 import './SingleRoutine.css';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Routes, Route, useParams, Outlet } from 'react-router-dom';
 import axios from 'axios';
 import { Routine } from '../';
 
@@ -60,6 +60,7 @@ const SingleRoutine = ({routines, activities, userRoutines, token}) => {
 				<div>
 					<button>Edit Routine Name/Goal</button>
 				</div>
+				<Outlet />
 			</div>
 			<div className='routine-activities'>
 				{routineActivities.map(({id, name}) => {

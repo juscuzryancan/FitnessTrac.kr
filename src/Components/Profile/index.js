@@ -56,6 +56,7 @@ const Profile = ({user, token, routines, setRoutines, handleRoutines}) => {
 
 	return (
 		<div className='profile'>
+			<h1>My account</h1>
 			<div>
 				{token && <AddRoutine handleRoutines={handleRoutines} setRoutines={setRoutines} routines={routines} token={token} />}
 				<h2>My Routines</h2>

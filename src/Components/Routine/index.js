@@ -26,8 +26,8 @@ const Routine = ({routine, children}) => {
 						<Activity key={i} activity={activity} />
 					);
 				})}
+				{children}
 			</div>
-			{children}
 		</div>
 	)
 }

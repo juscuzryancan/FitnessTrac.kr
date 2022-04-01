@@ -12,7 +12,7 @@ const Activities = ({token, activities, setActivities}) => {
             {
                 activities.length > 0 && activities.map((activity) => {
                     return (
-                        <Activity key={activity.id} activity={activity} />
+                        <Activity key={activity.id} token={token} activity={activity} />
                     );
                 })
             }
