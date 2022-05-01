@@ -73,7 +73,7 @@ const App = () => {
         </div>} />
         <Route path='/authentication/:method' element={<AuthenticationForm setToken={setToken} setUser={setUser} handleUser={handleUser} />} />
         <Route path='/activities' element={<Activities activities={activities} setActivities={setActivities} token={token} />} />
-        <Route path='/activity/:activityId' element={<EditActivity activities={activities} setActivities={setActivities}/>} />
+        <Route path='/activity/:activityId' element={<EditActivity token={token} handleActivities={handleActivities} activities={activities} setActivities={setActivities}/>} />
         <Route path='/routines' element={<Routines token={token} activities={activities} routines={routines} />} />
         <Route path='/routines/:routineId' element={<SingleRoutine token={token} activities={activities} routines={routines} setRoutines={setRoutines} />} > 
           <Route path='edit' element={<div>yes</div>}/>

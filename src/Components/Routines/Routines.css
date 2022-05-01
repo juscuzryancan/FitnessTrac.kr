@@ -25,3 +25,7 @@
 .routine .activity {
 	border:none
 }
+
+.routines-link {
+	color: var(--tertiary-color);
+}

@@ -48,9 +48,12 @@ const Profile = ({user, token, routines, setRoutines, handleRoutines}) => {
 
 	if(userRoutines.length === 0) {
 		return (
+			<>
+			{token && <AddRoutine handleRoutines={handleRoutines} setRoutines={setRoutines} routines={routines} token={token} />}
 			<div>
-				...Loading
+				No Routines Found
 			</div>
+			</>
 		)
 	}
 

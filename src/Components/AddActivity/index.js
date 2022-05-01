@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {useState} from 'react';
 import { ActivityForm } from '../';
+import './styles.css'
 
 const AddActivity = ({token, activities, setActivities}) => {
 	const blankActivity = {
@@ -27,7 +28,7 @@ const AddActivity = ({token, activities, setActivities}) => {
 
 	return (
 		<>
-			<h2>Add Activity</h2>
+			<h2 className='add-activity-header'>Add Activity</h2>
 			{error && <div>{error}</div>}
 			<ActivityForm activity={activity} setActivity={setActivity} handleSubmit={handleAdd} />
 		</>

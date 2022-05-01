@@ -1,0 +1,16 @@
+.edit-activity-container { 
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 20px;
+	border: 1px solid black;
+}
+
+.edit-activity-container > * { 
+	width: 100%;
+}
+
+.edit-activity-header {
+	display: flex;
+	justify-content: center;
+}
