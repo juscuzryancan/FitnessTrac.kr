@@ -1,7 +1,7 @@
 import './Activity.css';
 import { useNavigate } from 'react-router-dom';
 
-const Activity = ({activity, token,}) => {
+const Activity = ({activity, token}) => {
 	const navigate = useNavigate();
 	const {
 		id,

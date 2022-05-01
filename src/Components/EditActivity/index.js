@@ -2,16 +2,28 @@ import { useState, useEffect } from 'react';
 import ActivityForm from '../ActivityForm';
 import { useParams } from 'react-router-dom';
 
-const EditActivity = () => {
-	let activity;
+const EditActivity = ({activities}) => {
+	const [activity, setActivity] = useState(null);
 	const { activityId } = useParams();
-	console.log(activityId)
-	if(!activity){
+
+	const handleActivity = () => {
+		setActivity(activities.find((elem) => elem.id === activityId));
+	}
+
+	const handleSubmit = () => {
+		console.log()
+	}
+
+	useEffect(() => {
+		handleActivity();
+	}, [])
+
+	if(activity){
 		return (<>hello</>)
 	}
 
 	return (
-		<ActivityForm />
+		<ActivityForm activity={activity} setActivity={setActivity} handleSubmit={handleSubmit}/>
 	);
 }
 
