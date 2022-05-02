@@ -4,8 +4,7 @@ import { Routine, AddRoutine } from '../';
 import { useNavigate } from 'react-router-dom';
 import './styles.css';
 
-const Profile = ({user, token, routines, setRoutines, handleRoutines}) => {
-	const [userRoutines, setUserRoutines] = useState([]);
+const Profile = ({userRoutines, setUserRoutines, user, token, routines, setRoutines, handleRoutines}) => {
 
 	const navigate = useNavigate();
 
@@ -25,26 +24,6 @@ const Profile = ({user, token, routines, setRoutines, handleRoutines}) => {
 			console.error('error');
 		}
 	}
-
-	const handleUserRoutines = async () => {
-		try {
-			const { data } = await axios.get(`/api/users/${user.username}/routines`, {
-				headers: {
-					Authorization: `Bearer ${token}`
-				}
-			});
-			if(data.success === false) {
-				return;
-			}
-			setUserRoutines(data);
-		} catch (error) {
-			console.error(error);
-		}
-	}
-
-	useEffect(() => {
-		handleUserRoutines();
-	}, [user, routines]);
 
 	if(userRoutines.length === 0) {
 		return (

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 import { getActivities, getUserData } from './api'
-import { EditActivity, Login, Header, SingleRoutine, Activities, Routines, MyRoutines, AuthenticationForm, Profile } from './Components'
+import { EditRoutine, EditActivity, Login, Header, SingleRoutine, Activities, Routines, MyRoutines, AuthenticationForm, Profile } from './Components'
 
 const App = () => {
   const [token, setToken] = useState(() => {
@@ -12,6 +12,23 @@ const App = () => {
   const [user, setUser] = useState({});
   const [activities, setActivities] = useState([]);
   const [routines, setRoutines] = useState([]);
+	const [userRoutines, setUserRoutines] = useState([]);
+
+	const handleUserRoutines = async () => {
+		try {
+			const { data } = await axios.get(`/api/users/${user.username}/routines`, {
+				headers: {
+					Authorization: `Bearer ${token}`
+				}
+			});
+			if(data.success === false) {
+				return;
+			}
+			setUserRoutines(data);
+		} catch (error) {
+			console.error(error);
+		}
+	}
 
   const handleUser = async () => {
     try {
@@ -45,7 +62,6 @@ const App = () => {
   }
 
   useEffect(() => {
-
     if (token) {
       handleUser();
     }
@@ -63,6 +79,10 @@ const App = () => {
     handleUser();
   }, [token])
 
+	useEffect(() => {
+		handleUserRoutines();
+	}, [user, routines]);
+
   return (
     <Router>
       <Header token={token} user={user} setToken={setToken} />
@@ -75,10 +95,10 @@ const App = () => {
         <Route path='/activities' element={<Activities activities={activities} setActivities={setActivities} token={token} />} />
         <Route path='/activity/:activityId' element={<EditActivity token={token} handleActivities={handleActivities} activities={activities} setActivities={setActivities}/>} />
         <Route path='/routines' element={<Routines token={token} activities={activities} routines={routines} />} />
-        <Route path='/routines/:routineId' element={<SingleRoutine token={token} activities={activities} routines={routines} setRoutines={setRoutines} />} > 
-          <Route path='edit' element={<div>yes</div>}/>
+        <Route path='/routines/:routineId' element={<SingleRoutine handleRoutines={handleRoutines} token={token} activities={activities} routines={routines} setRoutines={setRoutines} userRoutines={userRoutines} />} > 
+          <Route path='edit' element={<EditRoutine token={token} handleRoutines={handleRoutines} activities={activities}/>}/>
         </Route>
-        <Route path='/profile' element={<Profile routines={routines} user={user} token={token} setRoutines={setRoutines} handleRoutines={handleRoutines}/>} />
+        <Route path='/profile' element={<Profile userRoutines={userRoutines} setUserRoutines={setUserRoutines} routines={routines} user={user} token={token} setRoutines={setRoutines} handleRoutines={handleRoutines}/>} />
       </Routes>
     </Router>
   );

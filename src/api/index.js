@@ -34,7 +34,6 @@ const getUserData = async (token) => {
             }
         })
 
-        console.log(user);
 
         return user;
     } catch (error) {

@@ -1,48 +1,62 @@
 import './SingleRoutine.css';
 import { useState, useEffect } from 'react';
-import { Routes, Route, useParams, Outlet } from 'react-router-dom';
+import { Routes, Route, useParams, Outlet, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Routine } from '../';
 
-const SingleRoutine = ({routines, activities, userRoutines, token}) => {
+const SingleRoutine = ({routines, activities, userRoutines, token, handleRoutines}) => {
+	const navigate = useNavigate();
 	const [routine, setRoutine] = useState(null);
 	const [formData, setFormData] = useState(null);
-	console.log(formData);
 	const blankFormData = {
 		activityId: -1,
 		count: 0,
 		duration: 0
 	}
 	const {routineId} = useParams();
-	console.log("routines in single routine", routines);
-	console.log("single routine",routine);
 
-	useEffect(() => {
-		setFormData(blankFormData)
-	}, [])
-
-	useEffect(() => {
-		let routineToFind = routines.find((routine) => {
-			return routine.id === routineId * 1;
-		});
-		if (!routineToFind) {
-			routineToFind = userRoutines
+	const handleRoutine = () => {
+		let routineToBeSet;
+		for(let i = 0; i < routines.length; i++) {
+			if(routines[i].id === (routineId * 1)) {
+				routineToBeSet = routines[i]
+			}
 		}
-		console.log("routine in effect", routineToFind)
-		setRoutine(routineToFind);
-	}, [routines]);
+
+		if(routineToBeSet) {
+			setRoutine(routineToBeSet);
+			return;
+		}
+
+		for(let i = 0; i < userRoutines.length; i++) {
+			if(userRoutines[i].id === (routineId * 1)) {
+				routineToBeSet = userRoutines[i];
+			}
+		}
+		setRoutine(routineToBeSet);
+	}
+
+	useEffect(() => {
+		handleRoutine();
+		setFormData(blankFormData)
+	}, [routines, userRoutines])
 
 	if(!routine) {
 		return (
-			<div>Loading...</div>
+			<h2>Routine Not Found</h2>
 		);
 	}
 
 	const handleAddActivityToRoutine = async (e) => {
 		e.preventDefault();
-		console.log("working")
 		try {
-
+			const {data} = await axios.post(`/api/routines/${routine.id}/activities`, formData, {
+				header: {
+					Authorization: `Bearer ${token}`
+				}
+			});
+			console.log("data", data)
+			await handleRoutines();
 		} catch (error) {
 			console.error(error)
 		}
@@ -58,9 +72,9 @@ const SingleRoutine = ({routines, activities, userRoutines, token}) => {
 					<h4>Goal: {goal}</h4>
 				</div>
 				<div>
-					<button>Edit Routine Name/Goal</button>
+					<button onClick={() => navigate("edit")}>Edit Routine Name/Goal</button>
 				</div>
-				<Outlet />
+				<Outlet context={{routine, setRoutine}}/>
 			</div>
 			<div className='routine-activities'>
 				{routineActivities.map(({id, name}) => {

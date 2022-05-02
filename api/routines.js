@@ -69,7 +69,7 @@ router.post('/:routineId/activities', async (req, res, next) => {
     try {
         const { routineId } = req.params;
         const { activityId, count, duration } = req.body;
-        const ra = await addActivityToRoutine({ routineId, activityId, count, duration });
+        const ra = await addActivityToRoutine({ routineId: routineId * 1, activityId: activityId * 1, count, duration });
         res.send(ra);
     } catch (error) {
         next(error);

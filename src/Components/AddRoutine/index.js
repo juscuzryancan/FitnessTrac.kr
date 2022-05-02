@@ -9,8 +9,7 @@ const AddRoutine = ({token, routines, setRoutines, activities, handleRoutines}) 
 		isPublic: false
 	}
 	const [error, setError] = useState("");
-	const [routine, setRoutine] = useState("");
-	console.log(routine);
+	const [routine, setRoutine] = useState(blankRoutine);
 
 	const handleAdd = async (e) => {
 		e.preventDefault();
@@ -28,6 +27,7 @@ const AddRoutine = ({token, routines, setRoutines, activities, handleRoutines}) 
 				return;
 			}
 			await handleRoutines();
+			console.log(routines);
 			setRoutine(blankRoutine);
 		} catch (e) {
 			console.error(e);
