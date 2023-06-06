@@ -33,5 +33,5 @@ server.use(({name, message}, req, res, next) => {
 
 server.listen(PORT, () => {
     client.connect();
-    console.log('The Client is connected and The Server is now up and listening on Port: ', PORT);
+    console.log(`The Server is now up and listening on Port: ${PORT}`);
 })

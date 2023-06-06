@@ -1,4 +1,4 @@
-export { default as Header } from './Header';
+export { default as Navbar } from './Navbar';
 export { default as Routine } from './Routine';
 export { default as Activities } from './Activities';
 export { default as Routines } from './Routines';
@@ -13,3 +13,4 @@ export { default as AddRoutine } from './AddRoutine';
 export { default as SingleRoutine } from './SingleRoutine';
 export { default as EditActivity } from './EditActivity';
 export { default as EditRoutine } from './EditRoutine';
+export { default as App } from './App';
