@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Activity = ({
   activity, 
@@ -14,9 +14,9 @@ const Activity = ({
     } = activity;
 
   return (
-    <div key={id} className='activity'>
-    <h3>Activity: {name}</h3>
-      <div>Description: {description}</div>
+    <div key={id}>
+      <h3>{name}</h3>
+      <div>{description}</div>
       {duration && <div>Duration: {duration}</div>}
       {count && <div>Count: {count}</div>}
       {token && <>

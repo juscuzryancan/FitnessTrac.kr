@@ -40,14 +40,14 @@ const Profile = ({userRoutines, setUserRoutines, user, token, routines, setRouti
       <div>
         {token && <AddRoutine handleRoutines={handleRoutines} setRoutines={setRoutines} routines={routines} token={token} />}
         <h2>My Routines</h2>
-        {userRoutines.map((routine) => {
-          return (
-            <Routine key={routine.id} routine={routine}>
-              <button onClick={() => navigate(`/routines/${routine.id}`)}>Edit</button>
-              <button onClick={() => handleDelete(routine.id)}>Delete</button>
-            </Routine>
-          );
-        })}
+        {/* {userRoutines.map((routine) => { */}
+        {/*   return ( */}
+        {/*     <Routine key={routine.id} routine={routine}> */}
+        {/*       <button onClick={() => navigate(`/routines/${routine.id}`)}>Edit</button> */}
+        {/*       <button onClick={() => handleDelete(routine.id)}>Delete</button> */}
+        {/*     </Routine> */}
+        {/*   ); */}
+        {/* })} */}
       </div>
     </div>
   )

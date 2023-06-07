@@ -1,12 +1,9 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const Header = ({
+const Navbar = ({
   token,
-  user,
   setToken
 }) => {
-  const [navMenuOpen, setNavMenuOpen] = useState(false);
 
   const handleLogout = () => {
     setToken('');
@@ -28,4 +25,4 @@ const Header = ({
   );
 }
 
-export default Header;
+export default Navbar;

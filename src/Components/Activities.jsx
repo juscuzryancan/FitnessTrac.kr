@@ -1,9 +1,9 @@
-import { Activity, AddActivity } from './';
+import { AddActivity, Activity } from './';
 
 const Activities = ({token, activities, setActivities}) => {
 
   return (
-    <div className='activities'>
+    <div>
       {token && <AddActivity activities={activities} setActivities={setActivities} token={token}/>}
       <h2>Activities</h2>
       {
