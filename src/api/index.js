@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BASE_URL = "/api"
 
-const register = async (username, password) => {
+export const register = async (username, password) => {
   try {
     const { data: user } = await axios.post(`${BASE_URL}/users/register`,{
       username,
@@ -14,7 +14,7 @@ const register = async (username, password) => {
   }
 }
 
-const login = async (username, password) => {
+export const login = async (username, password) => {
   try {
     const { data: token } = await axios.post(`${BASE_URL}/users/login`, {
       username,
@@ -26,7 +26,7 @@ const login = async (username, password) => {
   }
 }
 
-const getUserData = async (token) => {
+export const getUserData = async (token) => {
   try {
     const { data: user } = await axios.get(`${BASE_URL}/users/me`, {
       headers: {
@@ -41,7 +41,7 @@ const getUserData = async (token) => {
   }
 }
 
-const getActivities = async () => {
+export const getActivities = async () => {
   try {
     const { data: activities } = await axios.get(`${BASE_URL}/activities`);
     return activities;
@@ -50,7 +50,7 @@ const getActivities = async () => {
   }
 }
 
-const createActivity = async (token, name, description) => {
+export const createActivity = async (token, name, description) => {
   try {
     const { data: activity } = await axios.post(`${BASE_URL}/activities`,
       { name, description },
@@ -66,7 +66,7 @@ const createActivity = async (token, name, description) => {
   }
 }
 
-const getRoutines = async () => {
+export const getRoutines = async () => {
   try {
     const { data: routines } = await axios.get(`${BASE_URL}/routines`);
     return routines;
@@ -75,7 +75,7 @@ const getRoutines = async () => {
   }
 }
 
-const getUsersRoutines = async (token, username) => {
+export const getUsersRoutines = async (token, username) => {
   try {
     const { data: routines } = await axios.get(`${BASE_URL}/users/${username}/routines`, {
       headers: {
@@ -87,13 +87,3 @@ const getUsersRoutines = async (token, username) => {
     throw error;
   }
 }
-
-export { 
-  register,
-  getUserData,
-  login,
-  getActivities,
-  createActivity,
-  getRoutines,
-  getUsersRoutines 
-};

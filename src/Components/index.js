@@ -14,3 +14,4 @@ export { default as SingleRoutine } from './SingleRoutine';
 export { default as EditActivity } from './EditActivity';
 export { default as EditRoutine } from './EditRoutine';
 export { default as App } from './App';
+export { default as Home } from './Home';

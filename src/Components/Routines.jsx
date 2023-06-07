@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
-import { Activity, AddRoutine, Routine } from './';
+import { Link } from 'react-router-dom';
+import { Routine } from './';
 
-const Routines = ({token, activities, routines, setRoutines}) => {
-  const navigate = useNavigate();
+const Routines = ({
+  token, 
+  routines, 
+}) => {
 
   return (
     <div className="routines">

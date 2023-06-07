@@ -1,6 +1,5 @@
-import { useNavigate } from 'react-router';
-import { HamburgerIcon } from './';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Header = ({
   token,
@@ -8,7 +7,6 @@ const Header = ({
   setToken
 }) => {
   const [navMenuOpen, setNavMenuOpen] = useState(false);
-  const navigate = useNavigate();
 
   const handleLogout = () => {
     setToken('');
@@ -16,21 +14,15 @@ const Header = ({
   }
 
   return (
-    <nav className='bg-gray-100 nav-bar'>
-      <div className='nav-title' onClick={() => { navigate('/') }}>FitnessTrac.kr</div>
-      {token && <h3> Welcome, {user?.username}</h3>}
-      <button className='header-button' onClick={() => { navigate('/routines') }}>Routines</button>
-      <button className='header-button' onClick={() => { navigate('/activities') }} >Activities</button>
-      {token && <button className='header-button' onClick={() => { navigate('/profile') }} >My Account</button>}
-      {(!token) ?
-        <button className='header-button' onClick={() => { navigate('/authentication/login') }} >Login/Register</button>
-        : <button onClick={handleLogout} >Logout</button>}
-      <div 
-        className='hamburger-icon'
-        onClick={() => {
-          setNavMenuOpen(!navMenuOpen);
-        }}>
-        <HamburgerIcon  />
+    <nav className="flex justify-between p-4">
+      <div className="flex gap-4 items-end">
+        <Link className="text-xl" to="/">FitnessTrac.kr</Link>
+        <Link to="/routines">Routines</Link>
+        <Link to="/activities">Activities</Link>
+      </div>
+      <div className="flex gap-4 items-end">
+        <Link to="/authentication/login">Login</Link>
+        <Link to="/authentication/register">Sign Up</Link>
       </div>
     </nav>
   );
