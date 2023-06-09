@@ -54,7 +54,6 @@ const SingleRoutine = ({routines, activities, userRoutines, token, handleRoutine
           Authorization: `Bearer ${token}`
         }
       });
-      console.log("data", data)
       await handleRoutines();
     } catch (error) {
       console.error(error)

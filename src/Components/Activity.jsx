@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 const Activity = ({
   activity, 
-  token
+  token,
 }) => {
   const navigate = useNavigate();
   const {
@@ -14,7 +14,7 @@ const Activity = ({
     } = activity;
 
   return (
-    <div key={id}>
+    <div>
       <h3>{name}</h3>
       <div>{description}</div>
       {duration && <div>Duration: {duration}</div>}

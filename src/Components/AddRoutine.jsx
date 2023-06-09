@@ -19,7 +19,6 @@ const AddRoutine = ({token, routines, setRoutines, activities, handleRoutines}) 
           Authorization: `Bearer ${token}`
         }
       })
-      console.log(response);
 
       const {data} = response;
       if (data.success === false) {
@@ -27,7 +26,6 @@ const AddRoutine = ({token, routines, setRoutines, activities, handleRoutines}) 
         return;
       }
       await handleRoutines();
-      console.log(routines);
       setRoutine(blankRoutine);
     } catch (e) {
       console.error(e);

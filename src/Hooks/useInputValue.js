@@ -12,7 +12,6 @@ const useInputValue = (x, inputElem) => {
 
 	const handleChange = (e) => {
 		//update the state
-		console.log(e);
 		setState(e.target.value)
 	}
 	//callback will determine the setting steps seeing if the state is a string or object (primitive vs nonprim)
