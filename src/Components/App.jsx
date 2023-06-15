@@ -7,7 +7,6 @@ const App = () => {
   const [token, setToken] = useState(() => {
     return localStorage.getItem('token') || "";
   });
-  const { data: user } = useQuery("user");
 
   return (
     <div className="h-screen w-screen flex flex-col">
