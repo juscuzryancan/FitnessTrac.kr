@@ -46,7 +46,7 @@ router.post('/login', async (req, res, next) => {
         const user = await getUser({username, password});
 
         if(!user) {
-            next({
+            res.status(401).send({
                 name: "IncorrectCredentialsError",
                 message: "Incorrect username or password"
             });
