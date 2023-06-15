@@ -87,3 +87,11 @@ export const getUsersRoutines = async (token, username) => {
     throw error;
   }
 }
+ 
+export const createRoutine = async () => {
+  try {
+    const { data: routine } = await axios.get();
+  } catch (error) {
+    throw error;
+  }
+}

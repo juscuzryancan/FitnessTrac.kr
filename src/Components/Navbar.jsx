@@ -11,22 +11,36 @@ const Navbar = ({
   }
 
   return (
-    <nav className="flex justify-between p-4">
-      <div className="flex gap-4 items-end relative">
-        <Link className="text-xl
-          border-black
-          hover:border-b-2" 
+    <nav className="flex justify-between p-4 m-4 ">
+      <div className="flex gap-4 relative items-end">
+        <Link className="text-2xl"
           to="/"
         >FitnessTrac.kr</Link>
-        <Link to="/routines">Routines</Link>
-        <Link to="/activities">Activities</Link>
+        <Link 
+          to="/routines"
+          className="border-transparent border-b-2
+          hover:border-black"
+        >Routines</Link>
+        <Link 
+          className="border-transparent border-b-2
+          hover:border-black"
+          to="/activities"
+        >Activities</Link>
       </div>
       {
         token 
           ? <button onClick={handleLogout}>Sign Out</button>
           : <div className="flex gap-4 items-end">
-            <Link to="/authentication/login">Login</Link>
-            <Link to="/authentication/register">Sign Up</Link>
+            <Link 
+              className="border-transparent border-b-2
+              hover:border-black"
+              to="/login"
+            >Login</Link>
+            <Link 
+              className="border-transparent border-b-2
+              hover:border-black"
+              to="/register"
+            >Sign Up</Link>
           </div>
       }
     </nav>

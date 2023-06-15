@@ -1,19 +1,31 @@
-import { AddActivity, Activity } from './';
+import { AddActivity, Activity, Loader } from './';
+import { useQuery } from "react-query";
+import { getActivities } from "../api";
 
-const Activities = ({token, activities, setActivities}) => {
+const Activities = ({token}) => {
+  const { data: activities, isLoading } = useQuery("routines", getActivities);
 
   return (
-    <div className="p-4">
+    <>
       {token && <AddActivity activities={activities} setActivities={setActivities} token={token}/>}
-      <div className="text-2xl flex justify-center">Activities</div>
-      {
-        activities.length > 0 && activities.map((activity) => {
-          return (
-            <Activity key={activity.id} token={token} activity={activity} />
-          );
-        })
-      }
-    </div>
+      <div 
+        className="flex justify-center
+        text-2xl p-4"
+      >Activities</div>
+      <div className="flex flex-col gap-4 p-4">
+        {
+          isLoading
+          ? <div> 
+              <Loader />
+            </div>
+          : activities.map((activity) => {
+            return (
+              <Activity key={activity.id} token={token} activity={activity} />
+            );
+          })
+        }
+      </div>
+    </>
   );
 }
 

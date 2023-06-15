@@ -14,3 +14,8 @@ export { default as EditActivity } from './EditActivity';
 export { default as EditRoutine } from './EditRoutine';
 export { default as App } from './App';
 export { default as Home } from './Home';
+export { default as Loader } from './Loader';
+export { default as RoutineModal } from './RoutineModal';
+export { default as Routine } from './Routine';
+export { default as Login } from './Login';
+export { default as Register } from './Register';

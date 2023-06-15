@@ -14,8 +14,8 @@ const Activity = ({
     } = activity;
 
   return (
-    <div>
-      <h3>{name}</h3>
+    <div className="border border-black rounded p-2">
+      <div className="text-xl">{name}</div>
       <div>{description}</div>
       {duration && <div>Duration: {duration}</div>}
       {count && <div>Count: {count}</div>}
