@@ -7,7 +7,7 @@ const Activities = ({token}) => {
 
   return (
     <>
-      {token && <AddActivity activities={activities} setActivities={setActivities} token={token}/>}
+      {token && <button>Create an Activity</button>}
       <div 
         className="flex justify-center
         text-2xl p-4"

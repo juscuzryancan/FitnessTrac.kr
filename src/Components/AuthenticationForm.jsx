@@ -1,33 +1,70 @@
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 const AuthenticationForm = ({
   type,
-  onSubmit
+  onSubmit,
+  isLoading,
+  mutationError
 }) => {
   const {handleSubmit, register, formState: { errors }} = useForm();
 
   return (
     <form 
+      className="flex flex-col"
       onSubmit={handleSubmit(onSubmit)} 
-      className="flex flex-col items-center  
-      rounded-xl
-      bg-slate-500 -50 w-[400px] h-[400px]"
     >
       <div className="px-8">
         <label 
+          className="self-start text-xl" 
+          htmlFor="" 
+        >Username</label>
+        <input 
           {...register("username", {
             name: "username",
             required: "Username is required"
           })}
+          className="w-full"
+        />
+        {errors.username && <div className="text-red-500">{errors.username.message}</div>}
+      </div>
+
+      <div className="px-8">
+        <label 
           className="self-start text-xl" 
           htmlFor="" 
-        >Username</label>
-        <input className="w-full" />
-         {errors.username && <div className="text-red-500">{errors.username.message}</div>}
+        >Password</label>
+        <input 
+          type="password"
+          {...register("password", {
+            name: "password",
+            required: "Password is required"
+          })}
+          className="w-full"
+        />
+        {errors.password && <div className="text-red-500">{errors.password.message}</div>}
       </div>
-      <button>Submit</button>
+
+
+      {type === "register" && 
+        <div className="px-8">
+          <label 
+            className="self-start text-xl" 
+            htmlFor="" 
+          >Confirm Your Password</label>
+          <input 
+            type="password"
+            {...register("confirmPassword", {
+              name: "password",
+              required: "Please reenter your password"
+            })}
+            className="w-full"
+          />
+          {errors.password && <div className="text-red-500">{errors.password.message}</div>}
+        </div>
+      }
+
+      <button disabled={isLoading}>Submit</button>
+      {<div className="self-center text-red-500">{mutationError?.response.data.message}</div>}
     </form>
   )
 }

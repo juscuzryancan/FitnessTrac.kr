@@ -7,7 +7,10 @@ const Routines = ({
   token, 
 }) => {
   const [showModal, setShowModal] = useState(false);
-  const { data: routines, isLoading } = useQuery("routines", getRoutines);
+  const { data: routines, isLoading } = useQuery({
+    queryKey: ["routines"], 
+    queryFn: getRoutines
+  });
 
   const closeModal = () => {
     setShowModal(false);

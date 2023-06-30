@@ -1,9 +1,16 @@
 import { Link } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { getUserData } from '../api';
+import { useToken } from '../contexts/useToken';
 
-const Navbar = ({
-  token,
-  setToken
-}) => {
+const Navbar = () => {
+
+  const { token, setToken } = useToken();
+
+  const { data: user } = useQuery({
+    queryKey: "user",
+    queryFn: () => getUserData(token)
+  });
 
   const handleLogout = () => {
     setToken('');
@@ -29,7 +36,20 @@ const Navbar = ({
       </div>
       {
         token 
-          ? <button onClick={handleLogout}>Sign Out</button>
+          ? <div 
+            className="flex gap-4 items-end"
+          >
+            <Link 
+              className="border-transparent border-b-2
+              hover:border-black"
+              to="/profile"
+            >{user?.username}</Link>
+            <button 
+              className="border-transparent border-b-2
+              hover:border-black"
+              onClick={handleLogout}
+            >Sign Out</button>
+          </div>
           : <div className="flex gap-4 items-end">
             <Link 
               className="border-transparent border-b-2

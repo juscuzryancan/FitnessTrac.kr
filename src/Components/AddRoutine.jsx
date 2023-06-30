@@ -1,44 +1,27 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { RoutineForm } from './';
+import { useMutation, useQueryClient } from "react-query";
+import { RoutineForm } from ".";
+import { createRoutine } from "../api";
+import { useToken } from "../contexts/useToken";
 
-const AddRoutine = ({token, routines, setRoutines, activities, handleRoutines}) => {
-  const blankRoutine = {
-    name: "",
-    goal: "",
-    isPublic: false
-  }
-  const [error, setError] = useState("");
-  const [routine, setRoutine] = useState(blankRoutine);
-
-  const handleAdd = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('/api/routines', routine, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-
-      const {data} = response;
-      if (data.success === false) {
-        setError(data.message);
-        return;
-      }
-      await handleRoutines();
-      setRoutine(blankRoutine);
-    } catch (e) {
-      console.error(e);
-    }
-  }
+const AddRoutine = ({
+  closeModal
+}) => {
+  const { token } = useToken();
+  const queryClient = useQueryClient();
+  const { mutate, error } = useMutation({
+    mutationFn:  (data) => createRoutine(token, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["routines"], { exact: true});
+      closeModal();
+    },
+  });
 
   return (
-    <>
-    <h2>Add Routine</h2>
-      {error && <div>{error}</div>}
-      <RoutineForm routine={routine} setRoutine={setRoutine} handleSubmit={handleAdd} activities={activities}/>
-    </>
-  )
+    <RoutineForm 
+      onSubmit={mutate} 
+      mutationError={error}
+    />
+  );
 }
 
 export default AddRoutine;

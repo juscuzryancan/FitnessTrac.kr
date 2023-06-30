@@ -8,7 +8,7 @@ export const register = async (username, password) => {
       username,
       password
     });
-    return data;
+    return user;
   } catch (error) {
     throw error;
   }
@@ -16,11 +16,37 @@ export const register = async (username, password) => {
 
 export const login = async (username, password) => {
   try {
-    const { data: token } = await axios.post(`${BASE_URL}/users/login`, {
+    const { data: {token} } = await axios.post(`${BASE_URL}/users/login`, {
       username,
       password
     });
     return token;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export const createRoutine = async (token, routine) => {
+  try {
+    const { data } = await axios.post(`${BASE_URL}/routines`, routine, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export const editRoutine = async (token, routine) => {
+  try {
+    const { data } = await axios.post(`${BASE_URL}/routines`, routine, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return data;
   } catch (error) {
     throw error;
   }
@@ -33,7 +59,6 @@ export const getUserData = async (token) => {
         "Authorization": `Bearer ${token}`
       }
     })
-
 
     return user;
   } catch (error) {
@@ -87,11 +112,16 @@ export const getUsersRoutines = async (token, username) => {
     throw error;
   }
 }
- 
-export const createRoutine = async () => {
+
+export const deleteRoutine = async (token, routineId) => {
   try {
-    const { data: routine } = await axios.get();
+    await axios.delete(`${BASE_URL}/routines/${routineId}`, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
   } catch (error) {
     throw error;
   }
 }
+ 

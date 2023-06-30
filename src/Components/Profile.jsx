@@ -1,17 +1,19 @@
-import { AddRoutine } from './';
+import { useQuery } from 'react-query';
+import { getUserData, getRoutines } from '../api';
 
-const Profile = ({userRoutines, setUserRoutines, user, token, routines, setRoutines, handleRoutines}) => {
+const Profile = ({
+  token
+}) => {
 
-  if(userRoutines.length === 0) {
-    return (
-      <>
-        {token && <AddRoutine handleRoutines={handleRoutines} setRoutines={setRoutines} routines={routines} token={token} />}
-        <div>
-          No Routines Found
-        </div>
-      </>
-    )
-  }
+  const { data } = useQuery({
+    queryKey: "user",
+    queryFn: () => getUserData(token)
+  });
+
+  const { data: routines, isLoading } = useQuery({
+    queryKey: ["routines"], 
+    queryFn: getRoutines
+  });
 
   return (
     <div className='profile'>

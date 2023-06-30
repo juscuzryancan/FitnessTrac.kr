@@ -1,7 +1,15 @@
 import { useForm } from "react-hook-form"
 
-const RoutineForm = ({routine, setRoutine, onSubmit, activities}) => {
-  const { register, handleSubmit, watch, formState } = useForm();
+const RoutineForm = ({
+  routine, 
+  onSubmit, 
+  mutationError
+}) => {
+  const { register, handleSubmit, watch, formState: { errors } } = useForm({
+    value: {
+      ...routine
+    }
+  });
 
   return (
     <form 
@@ -9,39 +17,36 @@ const RoutineForm = ({routine, setRoutine, onSubmit, activities}) => {
       onSubmit={handleSubmit(onSubmit)}
     >
 
-      <div>
+      <div className="flex">
         <label >Name: </label>
         <input 
           {...register("name", {
           required: "Name is Required"
         })} />
       </div>
+      {errors.name && <div className="text-red-500">{errors.name.message}</div>}
 
-      <div>
+      <div className="flex">
         <label >Goal: </label>
         <input 
-          {...register("name", {
-          required: "Name is Required"
+          {...register("goal", {
+          required: "Goal is Required"
         })} />
       </div>
+      {errors.goal && <div className="text-red-500">{errors.goal.message}</div>}
 
       <div>
         <label >Public: </label>
         <input 
           type="checkbox"
-          {...register("name", {
-          required: "Name is Required"
+          {...register("isPublic", {
         })} />
       </div>
 
       <button className="px-4 py-2 border rounded border-black" type="submit">Submit</button>
+      {<div className="self-center text-red-500">{mutationError?.response.data.message}</div>}
     </form>
   )
 }
-
-// creatorId 1
-// goal"To beef up the Chest and Triceps!"
-// isPublictrue
-// name"Chest Day"
 
 export default RoutineForm;

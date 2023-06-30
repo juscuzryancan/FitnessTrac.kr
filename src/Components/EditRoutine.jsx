@@ -1,41 +1,27 @@
-import { useState } from 'react';
-import { useNavigate, useOutletContext } from 'react-router-dom';
-import { RoutineForm } from './'
-import axios from 'axios';
+import { useMutation, useQueryClient } from "react-query";
+import { RoutineForm } from ".";
+import { createRoutine } from "../api";
+import { useToken } from "../contexts/useToken";
 
-const EditRoutine = ({activities, token, handleRoutines}) => {
-  const navigate = useNavigate();
-  const [error, setError] = useState("");
-  const {routine, setRoutine} = useOutletContext();
-
-  const handleEdit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.patch(`/api/routines/${routine.id}`, routine, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-
-      const {data} = response;
-      if (data.success === false) {
-        setError(data.message);
-        return;
-      }
-      await handleRoutines();
-    } catch (e) {
-      console.error(e);
-    }
-  }
+const EditRoutine = ({
+  closeModal
+}) => {
+  const { token } = useToken();
+  const queryClient = useQueryClient();
+  const { mutate, error } = useMutation({
+    mutationFn:  (data) => editRoutine(token, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["routines"], { exact: true});
+      closeModal();
+    },
+  });
 
   return (
-    <>
-    <h2>Edit Routine</h2>
-      {error && <div>{error}</div>}
-      <RoutineForm routine={routine} setRoutine={setRoutine} handleSubmit={handleEdit} activities={activities}/>
-      <button onClick={() => navigate(-1)}>Close Edit Routine Form</button>
-    </>
-  )
+    <RoutineForm 
+      onSubmit={mutate} 
+      mutationError={error}
+    />
+  );
 }
 
 export default EditRoutine;
