@@ -20,7 +20,7 @@ router.post('/', requireUser, async (req, res, next) => {
 
         const dupeRoutine = await getRoutineByName(name)
         if(dupeRoutine) {
-            next({
+            res.status(400).send({
                 name: "RoutineAlreadyExists",
                 message: "A routine with this name already exists"
             })
@@ -55,8 +55,8 @@ router.delete('/:routineId', requireUser, async (req, res, next) => {
         const { routineId } = req.params;
         const routine = await getRoutineById(routineId);
         if (routine.creatorId === req.user.id) {
-            const deletedRoutine = await destroyRoutine(routineId);
-            res.send(deletedRoutine);
+            await destroyRoutine(routineId);
+            res.status(200);
         } else {
             next({message: 'You must be the creator of this routine'});
         }
