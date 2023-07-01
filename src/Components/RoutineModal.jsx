@@ -5,7 +5,8 @@ import clsx from 'clsx';
 
 const RoutineModal = ({
   showModal,
-  closeModal
+  closeModal,
+  children
 }) => {
   const ref = useRef();
   useClickOutside(ref, closeModal);
@@ -20,8 +21,7 @@ const RoutineModal = ({
       showModal && "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
     )}>
       <button onClick={closeModal} className="absolute top-4 left-4 rounded border-black border w-8 h-8 bg-red-400">X</button>
-      <div className="text-2xl p-4">New Routine</div>
-      <AddRoutine closeModal={closeModal}/>
+      {children}
     </div>
   );
 }

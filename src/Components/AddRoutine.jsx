@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from "react-query";
-import { RoutineForm } from ".";
 import { createRoutine } from "../api";
 import { useToken } from "../contexts/useToken";
+import { RoutineForm, RoutineModal } from "./";
 
 const AddRoutine = ({
+  showModal,
   closeModal
 }) => {
   const { token } = useToken();
@@ -17,10 +18,13 @@ const AddRoutine = ({
   });
 
   return (
-    <RoutineForm 
-      onSubmit={mutate} 
-      mutationError={error}
-    />
+    <RoutineModal closeModal={closeModal} showModal={showModal}>
+      <div className="text-2xl p-4">New Routine</div>
+      <RoutineForm 
+        onSubmit={mutate} 
+        mutationError={error}
+      />
+    </RoutineModal>
   );
 }
 

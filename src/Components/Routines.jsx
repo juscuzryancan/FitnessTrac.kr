@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Routine, Loader, RoutineModal } from './';
+import { Routine, Loader, AddRoutine } from './';
 import { useQuery } from "react-query";
 import { getRoutines } from "../api";
 
@@ -18,7 +18,7 @@ const Routines = ({
 
   return (
     <>
-      <RoutineModal closeModal={closeModal} showModal={showModal}/>
+      <AddRoutine closeModal={closeModal} showModal={showModal}/>
       <div 
         className="flex justify-center
         text-2xl p-4"
