@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { getActivities } from "../api";
 
 const Activities = ({token}) => {
-  const { data: activities, isLoading } = useQuery("routines", getActivities);
+  const { data: activities, isLoading } = useQuery("activities", getActivities);
 
   return (
     <>
