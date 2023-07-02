@@ -1,5 +1,5 @@
-import { Fragment } from "react";
-import { Activity } from "./";
+import { useState, Fragment } from "react";
+import { Activity, EditRoutine } from "./";
 import { useToken } from "../contexts/useToken";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { deleteRoutine, getUserData } from "../api";
@@ -8,6 +8,10 @@ const Routine = ({
   routine,
   children
 }) => {
+
+  const [showModal, setShowModal] = useState(false);
+  const closeModal = () => setShowModal(false);
+  const openModal = () => setShowModal(true);
 
   const { activities, creatorName, goal, name, id } = routine;
   const queryClient = useQueryClient();
@@ -26,7 +30,7 @@ const Routine = ({
 
   return (
     <>
-      <EditRoutine closeModal={closeModal} showModal={showModal}/>
+      <EditRoutine routine={routine} closeModal={closeModal} showModal={showModal}/>
       <div className="border rounded border-black
         p-4"
       >
@@ -58,7 +62,7 @@ const Routine = ({
             && <div
               className="flex justify-end gap-4 mx-2"
             >
-              <button className="border rounded border-black py-2 px-4 bg-blue-200">Edit</button>
+              <button onClick={openModal}className="border rounded border-black py-2 px-4 bg-blue-200">Edit</button>
               <button onClick={handleClick} className="border rounded border-black py-2 px-4 bg-red-400">Delete</button>
             </div>
         }

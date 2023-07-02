@@ -41,7 +41,7 @@ export const createRoutine = async (token, routine) => {
 
 export const editRoutine = async (token, routine) => {
   try {
-    const { data } = await axios.post(`${BASE_URL}/routines`, routine, {
+    const { data } = await axios.patch(`${BASE_URL}/routines/${routine.id}`, routine, {
       headers: {
         Authorization: `Bearer ${token}`
       }
