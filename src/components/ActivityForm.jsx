@@ -7,8 +7,6 @@ const ActivityForm = ({ routine }) => {
 
   const { token } = useToken();
 
-  console.log(token);
-
   const { data: activities, isLoading } = useQuery("activities", getActivities);
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm({
@@ -26,6 +24,7 @@ const ActivityForm = ({ routine }) => {
     {/*   <button type="submit">Submit</button> */}
     {/* </form> */}
       <select>
+        <option>No Activity Selected</option>
         {activities?.map((activity) => <option>{activity.name}</option>)}
       </select>
     </>
