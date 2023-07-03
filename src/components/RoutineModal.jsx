@@ -15,7 +15,7 @@ const RoutineModal = ({
     <div 
       ref={ref}
       className={clsx(
-      "w-[400px] h-[400px] bg-gray-400 rounded shadow",
+      "min-h-[400px] min-w-[400px]  p-4 bg-gray-400 rounded shadow",
       "flex flex-col items-center",
       !showModal && "hidden",
       showModal && "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
