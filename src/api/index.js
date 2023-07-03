@@ -125,3 +125,15 @@ export const deleteRoutine = async (token, routineId) => {
   }
 }
  
+export const addActivityToRoutine = async (token, routineId, activity) => {
+  try {
+    await axios.post(`${BASE_URL}/routines/${routineId}/activities`, {...activity, activityId: activity.id}, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+  } catch (error) {
+    throw error;
+  }
+}
+ 
