@@ -68,8 +68,13 @@ router.delete('/:routineId', requireUser, async (req, res, next) => {
 router.post('/:routineId/activities', async (req, res, next) => {
   try {
     const { routineId } = req.params;
-    const { id, count, duration } = req.body;
-    const ra = await addActivityToRoutine({ routineId: routineId * 1, activityId: activityId * 1, count, duration });
+    const { id: activityId, count, duration } = req.body;
+    const ra = await addActivityToRoutine({ 
+      routineId: routineId * 1, 
+      activityId: activityId * 1, 
+      count, 
+      duration 
+    });
     res.send(ra);
   } catch (error) {
     res.status(400).send({message: "This Activity already exists on this Routine"})

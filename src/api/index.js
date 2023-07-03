@@ -126,8 +126,9 @@ export const deleteRoutine = async (token, routineId) => {
 }
  
 export const addActivityToRoutine = async (token, routineId, activity) => {
+  console.log(activity);
   try {
-    await axios.post(`${BASE_URL}/routines/${routineId}/activities`, {...activity}, {
+    await axios.post(`${BASE_URL}/routines/${routineId}/activities`, {...JSON.parse(activity)}, {
       headers: {
         "Authorization": `Bearer ${token}`
       }

@@ -62,7 +62,7 @@ const Routine = ({
             && <div
               className="flex justify-end gap-4 mx-2"
             >
-              <button onClick={openModal}className="border rounded border-black py-2 px-4 bg-blue-200">Edit</button>
+              <button onClick={openModal} className="border rounded border-black py-2 px-4 bg-blue-200">Edit</button>
               <button onClick={handleClick} className="border rounded border-black py-2 px-4 bg-red-400">Delete</button>
             </div>
         }

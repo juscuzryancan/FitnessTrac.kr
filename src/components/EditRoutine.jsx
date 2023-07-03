@@ -22,14 +22,14 @@ const EditRoutine = ({
 
   return (
     <RoutineModal closeModal={closeModal} showModal={showModal}>
-      <div className="text-2xl p-4">Edit Your Routine</div>
+      <div className="text-2xl">Edit Your Routine</div>
       <RoutineForm 
         routine={routine}
         onSubmit={mutate} 
         mutationError={error}
       />
-      <div className="text-center">Changing your routine from public to private will remove it from the routines page*</div>
       <ActivitySelect routine={routine}/>
+      <div className="text-center">Changing your Routine from Public to Private will remove it from the Routines Page*</div>
     </RoutineModal>
   );
 }

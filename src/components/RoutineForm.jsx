@@ -14,11 +14,11 @@ const RoutineForm = ({
 
   return (
     <form 
-      className="flex flex-grow flex-col justify-center items-center gap-4"
+      className="flex flex-col justify-center gap-2"
       onSubmit={handleSubmit(onSubmit)}
     >
 
-      <div className="flex">
+      <div className="flex flex-col gap-1">
         <label >Name: </label>
         <input 
           {...register("name", {
@@ -27,7 +27,7 @@ const RoutineForm = ({
       </div>
       {errors.name && <div className="text-red-500">{errors.name.message}</div>}
 
-      <div className="flex">
+      <div className="flex flex-col gap-1">
         <label >Goal: </label>
         <input 
           {...register("goal", {
@@ -36,15 +36,14 @@ const RoutineForm = ({
       </div>
       {errors.goal && <div className="text-red-500">{errors.goal.message}</div>}
 
-      <div>
+      <div className="flex gap-1">
         <label >Public: </label>
         <input 
           type="checkbox"
           {...register("isPublic", {
         })} />
       </div>
-
-      <button className="px-4 py-2 border rounded border-black" type="submit">Submit</button>
+      <button className="border rounded border-black py-2 px-4 bg-blue-200" type="submit">Save Routine</button>
       {<div className="self-center text-red-500">{mutationError?.response.data.message}</div>}
     </form>
   )
