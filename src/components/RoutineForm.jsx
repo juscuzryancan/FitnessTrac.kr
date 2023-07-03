@@ -5,8 +5,9 @@ const RoutineForm = ({
   onSubmit, 
   mutationError
 }) => {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm({
-    value: {
+
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    values: {
       ...routine
     }
   });

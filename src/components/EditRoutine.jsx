@@ -28,6 +28,7 @@ const EditRoutine = ({
         onSubmit={mutate} 
         mutationError={error}
       />
+      <div className="text-center">Changing your routine from public to private will remove it from the routines page*</div>
       <ActivitySelect routine={routine}/>
     </RoutineModal>
   );

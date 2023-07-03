@@ -27,7 +27,7 @@ const ActivitySelect = ({ routine }) => {
     <div className="flex flex-col gap-2 p-4">
       <select onChange={(e) => setActivity(e.target.value)}>
         <option value={null}>No Activity Selected</option>
-        {activities?.map((activity) => <option value={JSON.stringify(activity)}>{activity.name}</option>)}
+        {activities?.map((activity) => <option key={activity.id} value={JSON.stringify(activity)}>{activity.name}</option>)}
       </select>
       <button className="px-4 py-2 border rounded border-black" onClick={mutate}>Add Activity</button>
       {<div className="self-center text-red-500">{error?.response.data.message}</div>}
