@@ -11,19 +11,15 @@ const ActivitySelect = ({ routine }) => {
 
   const queryClient = useQueryClient();
 
-  const [activity, setActivity] = useState({id: ""});
-  console.log(activity);
+  const [activity, setActivity] = useState();
   const { token } = useToken();
 
-
   const { mutate, error } = useMutation({
-    mutationFn: addActivityToRoutine(token, "id", JSON.parse(activity)),
+    mutationFn: () => addActivityToRoutine(token, routine?.id, activity),
     onSuccess: () => {
       queryClient.invalidateQueries(["routines"], { exact: true});
     },
   });
-
-  console.log(error);
 
   const { data: activities, isLoading } = useQuery("activities", getActivities);
 
