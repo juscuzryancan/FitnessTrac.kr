@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ActivityForm } from './';
+import { ActivitySelect } from './';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -46,7 +46,7 @@ const EditActivity = ({activities, handleActivities, token}) => {
   return (
     <div className='edit-activity-container'>
       <h2 className='edit-activity-header'>Edit Activity</h2>
-      <ActivityForm activity={activity} setActivity={setActivity} handleSubmit={handleSubmit}/>
+      <ActivitySelect activity={activity} setActivity={setActivity} handleSubmit={handleSubmit}/>
     </div>
     );
 }

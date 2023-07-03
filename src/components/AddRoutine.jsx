@@ -8,7 +8,9 @@ const AddRoutine = ({
   closeModal
 }) => {
   const { token } = useToken();
+
   const queryClient = useQueryClient();
+
   const { mutate, error } = useMutation({
     mutationFn:  (data) => createRoutine(token, data),
     onSuccess: () => {

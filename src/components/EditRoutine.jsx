@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "react-query";
-import { ActivityForm, RoutineForm, RoutineModal } from ".";
+import { ActivitySelect, RoutineForm, RoutineModal } from ".";
 import { useToken } from "../contexts/useToken";
 import { editRoutine } from "../api";
 
@@ -28,7 +28,7 @@ const EditRoutine = ({
         onSubmit={mutate} 
         mutationError={error}
       />
-      <ActivityForm routine={routine}/>
+      <ActivitySelect routine={routine}/>
     </RoutineModal>
   );
 }

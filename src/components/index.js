@@ -18,3 +18,4 @@ export { default as Login } from './Login';
 export { default as Register } from './Register';
 export { default as AddRoutine } from './AddRoutine';
 export { default as EditRoutine } from './EditRoutine';
+export { default as ActivitySelect } from './ActivitySelect';
