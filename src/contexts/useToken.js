@@ -1,4 +1,5 @@
 import { useState, createContext, useContext } from "react";
+import { useQueryClient } from "react-query";
 
 const TokenContext = createContext({ 
   token: localStorage.getItem("token") || "",
@@ -8,6 +9,7 @@ const TokenContext = createContext({
 export const TokenProvider = ({
   children
 }) => {
+  const queryClient = useQueryClient();
 
   const [token, setToken] = useState(() => {
     return localStorage.getItem("token");
@@ -20,7 +22,11 @@ export const TokenProvider = ({
   const contextValue = {
     token,
     setToken,
-    clearToken: () => setToken("")
+    clearToken: () => { 
+      localStorage.removeItem("token");
+      setToken("");
+      queryClient.removeQueries("user", {exact: true})
+    }
   }
   
   return (
