@@ -5,17 +5,12 @@ import { useToken } from '../contexts/useToken';
 
 const Navbar = () => {
 
-  const { token, setToken } = useToken();
+  const { token, setToken, clearToken } = useToken();
 
   const { data: user } = useQuery({
     queryKey: "user",
     queryFn: () => getUserData(token)
   });
-
-  const handleLogout = () => {
-    setToken('');
-    localStorage.removeItem('token');
-  }
 
   return (
     <nav className="flex justify-between p-4 m-4 ">
@@ -47,7 +42,7 @@ const Navbar = () => {
             <button 
               className="border-transparent border-b-2
               hover:border-black"
-              onClick={handleLogout}
+              onClick={clearToken}
             >Sign Out</button>
           </div>
           : <div className="flex gap-4 items-end">
