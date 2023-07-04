@@ -2,11 +2,11 @@ import { AuthenticationForm } from ".";
 import { useNavigate } from "react-router";
 import { login } from "../api";
 import { useMutation, useQueryClient } from "react-query";
+import { useToken } from "../contexts/useToken";
 
-const Login = ({
-  setToken
-}) => {
+const Login = () => {
   const navigate = useNavigate();
+  const { setToken } = useToken()
 
   const { isLoading, mutate, error: loginError } = useMutation({
     mutationKey: ["login"],
