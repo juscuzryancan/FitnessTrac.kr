@@ -12,12 +12,12 @@ const App = () => {
       <Navbar/>
       <Routes>
         <Route path='/' element={<Home/>} />
-        <Route path='/register' element={<Register setToken={setToken}/>} />
-        <Route path='/login' element={<Login setToken={setToken}/>} />
-        <Route path='/activities' element={<Activities token={token}/>} />
-        <Route path='/routines' element={<Routines token={token}/>} />
-        <Route path='/profile' element={<Profile token={token} />} />
-        <Route path='/routineform' element={<RoutineForm token={token} />} />
+        <Route path='/register' element={<Register/>} />
+        <Route path='/login' element={<Login/>} />
+        <Route path='/activities' element={<Activities/>} />
+        <Route path='/routines' element={<Routines/>} />
+        <Route path='/profile' element={<Profile/>} />
+        <Route path='/routineform' element={<RoutineForm/>} />
       </Routes>
     </div>
   );
