@@ -3,20 +3,19 @@ const util = require('util');
 const { getRoutineActivitiesByRoutine } = require('.');
 
 const createRoutine = async ({ creatorId, isPublic, name, goal }) => {
+  try {
 
-    try {
+    const { rows: [routine] } = await client.query(`
+      INSERT INTO routines( "creatorId", "isPublic", name, goal )
+      VALUES ( $1, $2, $3, $4 )
+      RETURNING *;
+    `, [ creatorId, isPublic, name, goal ]);
 
-        const { rows: [routine] } = await client.query(`
-            INSERT INTO routines( "creatorId", "isPublic", name, goal )
-            VALUES ( $1, $2, $3, $4 )
-            RETURNING *;
-        `, [ creatorId, isPublic, name, goal ]);
+    return routine;
 
-        return routine;
-
-    } catch (error) {
-        throw error;
-    }
+  } catch (error) {
+    throw error;
+  }
 };
 
 const getRoutinesWithoutActivities = async () => {
@@ -36,10 +35,7 @@ const getRoutinesWithoutActivities = async () => {
 
 const addActivitiesToRoutines = async (routines) => {
     if (routines.length === 0) {
-        throw {
-            name: "RoutinesNotFound",
-            message: "There are no routines found"
-        }
+      return [];
     }
 
 	try {
@@ -86,16 +82,14 @@ const getAllRoutines = async () => {
 const getAllPublicRoutines = async () => {
 
     try {
-
-        const { rows: routines } = await client.query(`
-            SELECT routines.*, users.username AS "creatorName"
-            FROM routines
-            JOIN users
-            ON routines."creatorId" = users.id
-            WHERE routines."isPublic" = true;
-        `);
-
-        return await addActivitiesToRoutines(routines);
+      const { rows: routines } = await client.query(`
+          SELECT routines.*, users.username AS "creatorName"
+          FROM routines
+          JOIN users
+          ON routines."creatorId" = users.id
+          WHERE routines."isPublic" = true;
+      `);
+      return await addActivitiesToRoutines(routines);
 
     } catch (error) {
         throw error;
