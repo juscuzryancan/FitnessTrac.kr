@@ -20,7 +20,6 @@ const Login = () => {
     }
   });
 
-
   return (
     <div className="flex flex-col items-center">
       <div
@@ -39,6 +38,7 @@ const Login = () => {
       </div>
     </div>
   );
+
 }
 
 export default Login;

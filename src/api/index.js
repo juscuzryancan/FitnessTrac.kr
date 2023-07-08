@@ -124,9 +124,8 @@ export const deleteRoutine = async (token, routineId) => {
     throw error;
   }
 }
- 
+
 export const addActivityToRoutine = async (token, routineId, activity) => {
-  console.log(activity);
   try {
     await axios.post(`${BASE_URL}/routines/${routineId}/activities`, {...JSON.parse(activity)}, {
       headers: {
@@ -137,4 +136,40 @@ export const addActivityToRoutine = async (token, routineId, activity) => {
     throw error;
   }
 }
- 
+
+export const editCountOrDuration = async (token, {routineActivityId, count, duration}) => {
+  try {
+    await axios.patch(`${BASE_URL}/routine_activities/${routineActivityId}`, {count, duration}, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+  } catch (error) {
+    throw error;
+  }
+}
+
+export const deleteActivity = async (token, routineActivityId) => {
+  try {
+    await axios.delete(`${BASE_URL}/routine_activities/${routineActivityId}`, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+  } catch (error) {
+    throw error;
+  }
+}
+
+export const getRoutinesByUsername = async (token, username) => {
+  try {
+    const { data } = await axios.get(`${BASE_URL}/users/${username}/routines`, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}

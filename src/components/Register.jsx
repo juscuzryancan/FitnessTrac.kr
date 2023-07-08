@@ -3,9 +3,7 @@ import { useNavigate } from "react-router";
 import { register } from "../api";
 import { useMutation, useQueryClient } from "react-query";
 
-const Register = ({
-  setToken
-}) => {
+const Register = () => {
   const navigate = useNavigate();
 
   const { isLoading, mutate, error: registerError } = useMutation({

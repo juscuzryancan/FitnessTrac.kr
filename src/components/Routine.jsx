@@ -6,6 +6,7 @@ import { deleteRoutine, getUserData } from "../api";
 
 const Routine = ({
   routine,
+  isProfile,
   children
 }) => {
 
@@ -24,7 +25,7 @@ const Routine = ({
   const { mutate: handleClick } = useMutation({
     mutationFn: () => deleteRoutine(token, id),
     onSuccess: () => {
-      queryClient.invalidateQueries(["routines"], { exact: true});
+      queryClient.invalidateQueries(["routines"]);
     }
   });
 
@@ -49,19 +50,15 @@ const Routine = ({
           <div className="flex flex-col gap-2">
             {activities?.map((activity, i) => {
               return (
-                <Fragment key={i}>
-                  <Activity activity={activity} />
-                </Fragment>
+                <Activity key={activity.id} isOwner={creatorName === user?.username} activity={activity} />
               );
             })}
             {children}
           </div>
         </div>
         {
-          creatorName === user?.username 
-            && <div
-              className="flex justify-end gap-4 mx-2"
-            >
+          isProfile 
+            && <div className="flex justify-end gap-4 mx-2">
               <button onClick={openModal} className="border rounded border-black py-2 px-4 bg-blue-200">Edit</button>
               <button onClick={handleClick} className="border rounded border-black py-2 px-4 bg-red-400">Delete</button>
             </div>

@@ -15,7 +15,7 @@ const EditRoutine = ({
       editRoutine(token, {...data, id: routine.id}) 
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["routines"], { exact: true });
+      queryClient.invalidateQueries(["routines"]);
       closeModal();
     },
   });

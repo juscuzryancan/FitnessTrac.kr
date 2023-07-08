@@ -14,7 +14,7 @@ const AddRoutine = ({
   const { mutate, error } = useMutation({
     mutationFn:  (data) => createRoutine(token, data),
     onSuccess: () => {
-      queryClient.invalidateQueries(["routines"], { exact: true});
+      queryClient.invalidateQueries(["routines"]);
       closeModal();
     },
   });
