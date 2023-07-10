@@ -75,7 +75,7 @@ export const getActivities = async () => {
   }
 }
 
-export const createActivity = async (token, name, description) => {
+export const createActivity = async (token, {name, description}) => {
   try {
     const { data: activity } = await axios.post(`${BASE_URL}/activities`,
       { name, description },

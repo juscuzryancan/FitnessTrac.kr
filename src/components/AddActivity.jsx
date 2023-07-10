@@ -1,37 +1,33 @@
-import axios from 'axios';
-import { useState } from 'react';
-import { ActivityForm } from './';
+import { useMutation, useQueryClient } from "react-query";
+import { createRoutine, createActivity } from "../api";
+import { useToken } from "../contexts/useToken";
+import { ActivityModal, ActivityForm } from "./";
 
-const AddActivity = ({token, activities, setActivities}) => {
-  const blankActivity = {
-    name: "",
-    description: ""
-  }
-  const [error, setError] = useState("");
-  const [activity, setActivity] = useState(blankActivity);
+const AddActivity = ({
+  showModal,
+  closeModal
+}) => {
+  const { token } = useToken();
 
-  const handleAdd = async (e) => {
-    e.preventDefault();
-    try {
-      const {data} = await axios.post('/api/activities', activity, {headers: {Authorization: `Bearer ${token}`}})
-      if (data.success === false) {
-        setError(data.message);
-        return;
-      }
-      setActivities([...activities, data]);
-      setActivity(blankActivity);
-    } catch (e) {
-      console.error(e);
-    }
-  }
+  const queryClient = useQueryClient();
+
+  const { mutate, error } = useMutation({
+    mutationFn:  (data) => createActivity(token, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["activities"]);
+      closeModal();
+    },
+  });
 
   return (
-    <>
-      <h2 className='add-activity-header'>Add Activity</h2>
-      {error && <div>{error}</div>}
-      <ActivityForm activity={activity} setActivity={setActivity} handleSubmit={handleAdd} />
-    </>
-  )
+    <ActivityModal closeModal={closeModal} showModal={showModal}>
+      <div className="text-2xl p-4">New Activity</div>
+      <ActivityForm 
+        onSubmit={mutate} 
+        mutationError={error}
+      />
+    </ActivityModal>
+  );
 }
 
 export default AddActivity;

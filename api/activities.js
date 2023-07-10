@@ -15,13 +15,13 @@ router.get('/', async (req, res, next) => {
 });
 
 router.post('/', requireUser, async (req, res, next) => {
-    try {
-        const { name, description } = req.body;
-        const activity = await createActivity({ name, description });
-        res.send(activity);
-    } catch (error) {
-        next(error);
-    }
+  try {
+    const { name, description } = req.body;
+    const activity = await createActivity({ name, description });
+    res.send(activity);
+  } catch (error) {
+    res.status(400).send(error);
+  }
 });
 
 router.patch('/:activityId', requireUser, async (req, res, next) => {

@@ -29,6 +29,7 @@ const EditRoutine = ({
         mutationError={error}
       />
       <ActivitySelect routine={routine}/>
+      <div className="text-center mb-2">You can add more Activities on the Activities Page*</div>
       <div className="text-center">Changing your Routine from Public to Private will remove it from the Routines Page*</div>
     </RoutineModal>
   );
