@@ -1,7 +1,7 @@
 import { AuthenticationForm } from ".";
 import { useNavigate } from "react-router";
 import { register } from "../api";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -13,9 +13,6 @@ const Register = () => {
      },
     onSuccess: (data, variables, context) => {
       navigate("/login");
-    },
-    onError: (error, variables, context) => {
-      console.log("errro", error)
     }
   });
 

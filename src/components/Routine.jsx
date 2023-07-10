@@ -3,6 +3,7 @@ import { Activity, EditRoutine } from "./";
 import { useToken } from "../contexts/useToken";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { deleteRoutine, getUserData } from "../api";
+import Loader from "./Loader";
 
 const Routine = ({
   routine,
@@ -22,9 +23,10 @@ const Routine = ({
     queryFn: () => getUserData(token)
   });
 
-  const { mutate: handleClick } = useMutation({
+  const { mutate: handleClick, isLoading } = useMutation({
     mutationFn: () => deleteRoutine(token, id),
     onSuccess: () => {
+      console.log("successful");
       queryClient.invalidateQueries(["routines"]);
     }
   });
@@ -60,7 +62,7 @@ const Routine = ({
           isProfile 
             && <div className="flex justify-end gap-4 mx-2">
               <button onClick={openModal} className="border rounded border-black py-2 px-4 bg-blue-200">Edit</button>
-              <button onClick={handleClick} className="border rounded border-black py-2 px-4 bg-red-400">Delete</button>
+              <button onClick={handleClick} className="border rounded border-black py-2 px-4 bg-red-400">{isLoading ? <Loader/> : "Delete"}</button>
             </div>
         }
       </div>

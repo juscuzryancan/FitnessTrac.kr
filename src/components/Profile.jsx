@@ -28,7 +28,7 @@ const Profile = () => {
       <AddRoutine closeModal={closeModal} showModal={showModal} />
       <div className="flex justify-center">
         <button
-          className="flex justify-center border border-black rounded-full p-4"
+          className="flex bg-blue-200 justify-center border border-black rounded-full p-4"
           onClick={() => setShowModal(!showModal)}
         >
           Create a Routine
