@@ -31,7 +31,11 @@ server.use(({name, message}, req, res, next) => {
   res.send({name, message, success: false});
 });
 
-server.listen(PORT, () => {
-    client.connect();
+server.listen(PORT, async () => {
+  try {
+    await client.connect();
     console.log(`The Server is now up and listening on Port: ${PORT}`);
+  } catch (e) {
+    console.error("Error occurred", e);
+  }
 })
