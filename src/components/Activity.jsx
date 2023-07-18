@@ -6,7 +6,7 @@ import { deleteActivity, editCountOrDuration } from "../api";
 
 const Activity = ({
   activity, 
-  isOwner
+  isProfile
 }) => {
   const [count, setCount] = useState(activity.count || 0);
   const [duration, setDuration] = useState(activity.duration || 0);
@@ -42,9 +42,9 @@ const Activity = ({
     <div className="border border-black rounded p-2">
       <div className="text-xl">{name}</div>
       <div>{description}</div>
-      {(!isOwner && activity.duration) && <div>Duration: {activity.duration}</div>}
-      {(!isOwner && activity.count) && <div>Count: {activity.count}</div>}
-      {isOwner && <>
+      {(!isProfile && activity.duration) && <div>Duration: {activity.duration}</div>}
+      {(!isProfile && activity.count) && <div>Count: {activity.count}</div>}
+      {isProfile && <>
         <div className="flex gap-1">
           <label>Count</label>
           <input 

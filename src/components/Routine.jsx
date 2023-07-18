@@ -52,7 +52,7 @@ const Routine = ({
           <div className="flex flex-col gap-2">
             {activities?.map((activity, i) => {
               return (
-                <Activity key={activity.id} isOwner={creatorName === user?.username} activity={activity} />
+                <Activity key={activity.id} isProfile={isProfile} activity={activity} />
               );
             })}
             {children}
