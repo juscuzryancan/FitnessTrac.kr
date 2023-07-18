@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Loader } from ".";
 import { useToken } from "../contexts/useToken";
-import { useMutation, useQueries, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { deleteActivity, editCountOrDuration } from "../api";
 
 const Activity = ({
@@ -11,12 +10,10 @@ const Activity = ({
 }) => {
   const [count, setCount] = useState(activity.count || 0);
   const [duration, setDuration] = useState(activity.duration || 0);
-  const navigate = useNavigate();
   const { token } = useToken();
   const queryClient = useQueryClient();
 
   const {
-    id,
     name,
     description,
     routineActivityId
@@ -38,7 +35,6 @@ const Activity = ({
     mutationFn: () => deleteActivity(token, routineActivityId),
     onSuccess: () => {
       queryClient.invalidateQueries(["routines"]);
-      closeModal();
     },
   });
 
