@@ -15,7 +15,7 @@
     "test:watch:api": "jest --watchAll api",
     "client:dev": "react-scripts start",
     "tailwind:watch": "npx tailwindcss -i ./src/index.css -o ./public/output.css --watch",
-    "heroku:build": "react-scripts build"
+    "heroku:build": "react-scripts --openssl-legacy-provider start"
   },
   "repository": {
     "type": "git",
