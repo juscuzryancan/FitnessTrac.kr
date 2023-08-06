@@ -14,7 +14,8 @@
     "test:watch:db": "jest --watchAll db",
     "test:watch:api": "jest --watchAll api",
     "client:dev": "react-scripts start",
-    "tailwind:watch": "npx tailwindcss -i ./src/index.css -o ./public/output.css --watch"
+    "tailwind:watch": "npx tailwindcss -i ./src/index.css -o ./public/output.css --watch",
+    "heroku:build": "react-scripts build"
   },
   "repository": {
     "type": "git",
