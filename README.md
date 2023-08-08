@@ -29,3 +29,6 @@ To run all the tests in watch mode (re-runs on code update), run
 
     npm run test:watch api.spec
 
+### Deployed Site
+
+https://lit-tor-21021-b8c9417056cb.herokuapp.com/
