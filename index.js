@@ -28,7 +28,9 @@ server.use((req, res, next) => {
 })
 
 server.use(({name, message}, req, res, next) => {
-  res.send({name, message, success: false});
+  console.error(name)
+  console.error(message)
+  res.status(500).send({name, message, success: false});
 });
 
 server.listen(PORT, () => {
