@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 import { ActivitySelect, RoutineForm, RoutineModal } from ".";
-import { useToken } from "../contexts/useToken";
+import { useUser } from "../contexts/useUser";
 import { editRoutine } from "../api";
 
 const EditRoutine = ({
@@ -8,7 +8,7 @@ const EditRoutine = ({
   closeModal,
   routine
 }) => {
-  const { token } = useToken();
+  const { token } = useUser();
   const queryClient = useQueryClient();
   const { mutate, error } = useMutation({
     mutationFn:  (data) => { 

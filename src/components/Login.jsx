@@ -1,12 +1,12 @@
 import { AuthenticationForm } from ".";
 import { useNavigate } from "react-router";
 import { login } from "../api";
-import { useMutation, useQueryClient } from "react-query";
-import { useToken } from "../contexts/useToken";
+import { useMutation } from "react-query";
+import { useUser } from "../contexts/useUser";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setToken } = useToken()
+  const { setToken } = useUser()
 
   const { isLoading, mutate, error: loginError } = useMutation({
     mutationKey: ["login"],
@@ -16,7 +16,7 @@ const Login = () => {
     onSuccess: (data, variables, context) => {
       localStorage.setItem("token", data);
       setToken(data);
-      navigate("/profile");
+      navigate("/");
     }
   });
 

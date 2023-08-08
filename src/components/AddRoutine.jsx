@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from "react-query";
 import { createRoutine } from "../api";
-import { useToken } from "../contexts/useToken";
+import { useUser } from "../contexts/useUser";
 import { RoutineForm, RoutineModal } from "./";
 
 const AddRoutine = ({
   showModal,
   closeModal
 }) => {
-  const { token } = useToken();
+  const { token } = useUser();
 
   const queryClient = useQueryClient();
 

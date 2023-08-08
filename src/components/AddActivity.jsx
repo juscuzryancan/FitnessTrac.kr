@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from "react-query";
-import { createRoutine, createActivity } from "../api";
-import { useToken } from "../contexts/useToken";
+import { createActivity } from "../api";
+import { useUser } from "../contexts/useUser";
 import { ActivityModal, ActivityForm } from "./";
 
 const AddActivity = ({
   showModal,
   closeModal
 }) => {
-  const { token } = useToken();
+  const { token } = useUser();
 
   const queryClient = useQueryClient();
 

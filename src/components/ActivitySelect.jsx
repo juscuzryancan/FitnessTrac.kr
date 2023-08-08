@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
-import { useToken } from "../contexts/useToken";
+import { useUser } from "../contexts/useUser";
 import { getActivities, addActivityToRoutine } from "../api";
 
 /** 
@@ -12,7 +12,7 @@ const ActivitySelect = ({ routine }) => {
   const queryClient = useQueryClient();
 
   const [activity, setActivity] = useState();
-  const { token } = useToken();
+  const { token } = useUser();
 
   const { mutate, error } = useMutation({
     mutationFn: () => addActivityToRoutine(token, routine?.id, activity),

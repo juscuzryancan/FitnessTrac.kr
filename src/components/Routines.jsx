@@ -1,12 +1,9 @@
-import { useState } from 'react';
-import { Routine, Loader, AddRoutine } from './';
+import { Routine, Loader } from './';
 import { useQuery } from "react-query";
 import { getRoutines } from "../api";
-import { useToken } from '../contexts/useToken';
 
 const Routines = ({
 }) => {
-  const { token } = useToken();
   const { data: routines, isLoading } = useQuery({
     queryKey: ["routines"],
     queryFn: getRoutines

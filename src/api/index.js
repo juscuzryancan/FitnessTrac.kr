@@ -54,6 +54,9 @@ export const editRoutine = async (token, routine) => {
 
 export const getUserData = async (token) => {
   try {
+    if (token === null) {
+      throw new Error("Token is not provided");
+    }
     const { data: user } = await axios.get(`${BASE_URL}/users/me`, {
       headers: {
         "Authorization": `Bearer ${token}`

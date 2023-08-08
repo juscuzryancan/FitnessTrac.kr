@@ -3,10 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 import { RoutineForm, Register, Login, Home, Navbar, Activities, Routines, Profile } from './'
 
 const App = () => {
-  const [token, setToken] = useState(() => {
-    return localStorage.getItem("token");
-  });
-
   return (
     <div className="h-screen w-screen flex flex-col">
       <Navbar/>

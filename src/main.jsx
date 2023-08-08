@@ -4,17 +4,17 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { TokenProvider } from './contexts/useToken';
+import { UserProvider } from './contexts/useUser';
 
 const queryClient = new QueryClient();
 
 ReactDOM.render(
   <QueryClientProvider client={queryClient}>
     <Router>
-      <TokenProvider>
+      <UserProvider>
         <App />
         <ReactQueryDevtools />
-      </TokenProvider>
+      </UserProvider>
     </Router>
   </QueryClientProvider>,
   document.querySelector('#root')

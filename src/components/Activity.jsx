@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Loader } from ".";
-import { useToken } from "../contexts/useToken";
+import { useUser } from "../contexts/useUser";
 import { useMutation, useQueryClient } from "react-query";
 import { deleteActivity, editCountOrDuration } from "../api";
 
@@ -10,7 +10,7 @@ const Activity = ({
 }) => {
   const [count, setCount] = useState(activity.count || 0);
   const [duration, setDuration] = useState(activity.duration || 0);
-  const { token } = useToken();
+  const { token } = useUser();
   const queryClient = useQueryClient();
 
   const {

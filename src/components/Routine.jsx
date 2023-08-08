@@ -1,8 +1,8 @@
-import { useState, Fragment } from "react";
+import { useState } from "react";
 import { Activity, EditRoutine } from "./";
-import { useToken } from "../contexts/useToken";
-import { useQuery, useMutation, useQueryClient } from "react-query";
-import { deleteRoutine, getUserData } from "../api";
+import { useUser } from "../contexts/useUser";
+import { useMutation, useQueryClient } from "react-query";
+import { deleteRoutine } from "../api";
 import Loader from "./Loader";
 
 const Routine = ({
@@ -17,16 +17,11 @@ const Routine = ({
 
   const { activities, creatorName, goal, name, id } = routine;
   const queryClient = useQueryClient();
-  const { token } = useToken();
-  const { data: user } = useQuery({
-    queryKey: "user",
-    queryFn: () => getUserData(token)
-  });
+  const { token } = useUser();
 
   const { mutate: handleClick, isLoading } = useMutation({
     mutationFn: () => deleteRoutine(token, id),
     onSuccess: () => {
-      console.log("successful");
       queryClient.invalidateQueries(["routines"]);
     }
   });

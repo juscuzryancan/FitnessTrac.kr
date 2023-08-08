@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { AddActivity, Activity, Loader } from './';
-import { useToken } from '../contexts/useToken';
+import { useUser } from '../contexts/useUser';
 import { useQuery } from "react-query";
 import { getActivities } from "../api";
 
 const Activities = () => {
-  const { token } = useToken();
+  const { token } = useUser();
   const { data: activities, isLoading } = useQuery("activities", getActivities);
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => {

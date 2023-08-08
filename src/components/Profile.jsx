@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from 'react-query';
-import { useToken } from '../contexts/useToken';
+import { useUser } from '../contexts/useUser';
 import { Loader, Routine, AddRoutine } from '.';
 import { getUserData, getRoutinesByUsername } from '../api';
 
@@ -11,17 +11,30 @@ const Profile = () => {
     setShowModal(false);
   }
 
-  const { token } = useToken();
+  const { token } = useUser();
 
-  const { data } = useQuery({
+  const { data, isError: userError, isLoading: userLoading } = useQuery({
     queryKey: "user",
     queryFn: () => getUserData(token)
   });
 
-  const { data: routines, isLoading } = useQuery({
+  const { data: routines, isLoading, isError: routineError } = useQuery({
     queryKey: ["routines", data?.username], 
     queryFn: () => getRoutinesByUsername(token, data?.username)
   });
+
+  if (userLoading || !token) {
+    return (
+      <div>hello user is loading</div>
+    )
+  }
+
+  if (userError || routineError) {
+    return <div
+      className="flex justify-center
+      text-2xl p-4"
+    >Please Login To Access your Account</div>
+  }
 
   return (
     <>
