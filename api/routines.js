@@ -56,7 +56,7 @@ router.delete('/:routineId', requireUser, async (req, res, next) => {
     const routine = await getRoutineById(routineId);
     if (routine.creatorId === req.user.id) {
       await destroyRoutine(routineId);
-      res.status(200);
+      res.sendStatus(200);
     } else {
       next({message: 'You must be the creator of this routine'});
     }
