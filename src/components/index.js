@@ -8,7 +8,6 @@ export { default as ActivityForm } from './ActivityForm';
 export { default as Activity } from './Activity';
 export { default as Profile } from './Profile';
 export { default as AddActivity } from './AddActivity';
-export { default as SingleRoutine } from './SingleRoutine';
 export { default as App } from './App';
 export { default as Home } from './Home';
 export { default as Loader } from './Loader';

@@ -32,7 +32,7 @@ const Activities = () => {
       <div className="flex flex-col gap-4 p-4">
         {
           isLoading
-          ? <div> 
+          ? <div className="flex justify-center">
               <Loader />
             </div>
           : activities.map((activity) => {

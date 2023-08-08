@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "an API for our new fitness empire, FitnessTrac.kr, using node, express, and postgresql",
   "main": "index.js",
+  "private": true,
+  "type": "commonjs",
   "scripts": {
     "seed:dev": "nodemon ./db/seed.js",
     "seed": "node ./db/seed.js",
@@ -15,7 +17,11 @@
     "test:watch:api": "jest --watchAll api",
     "client:dev": "react-scripts start",
     "tailwind:watch": "npx tailwindcss -i ./src/index.css -o ./public/output.css --watch",
-    "heroku:build": "react-scripts --openssl-legacy-provider build"
+    "heroku:build": "react-scripts --openssl-legacy-provider build",
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
   "repository": {
     "type": "git",
@@ -31,8 +37,18 @@
   "author": "Ryan Riley Puzon",
   "license": "ISC",
   "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "autoprefixer": "^10.4.14",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
     "nodemon": "^2.0.4",
-    "tailwindcss": "^3.3.2"
+    "postcss": "^8.4.27",
+    "tailwindcss": "^3.3.3",
+    "vite": "^4.4.5"
   },
   "dependencies": {
     "axios": "^0.19.2",
@@ -51,8 +67,7 @@
     "react-hook-form": "^7.44.3",
     "react-icons": "^4.10.1",
     "react-query": "^3.39.3",
-    "react-router-dom": "^6.2.1",
-    "react-scripts": "^4.0.0"
+    "react-router-dom": "^6.2.1"
   },
   "proxy": "http://localhost:3000",
   "browserslist": {
