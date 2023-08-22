@@ -4,7 +4,7 @@ const AuthenticationForm = ({
   type,
   onSubmit,
   isLoading,
-  mutationError
+  authError
 }) => {
   const {handleSubmit, register, formState: { errors }} = useForm();
 
@@ -64,7 +64,7 @@ const AuthenticationForm = ({
       }
 
       <button disabled={isLoading}>Submit</button>
-      {<div className="self-center text-red-500">{mutationError?.response.data.message}</div>}
+      {authError && <div className="self-center text-red-500">{authError?.response.data.message}</div>}
     </form>
   )
 }
