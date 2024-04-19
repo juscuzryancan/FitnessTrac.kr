@@ -3,40 +3,28 @@ import axios from 'axios';
 const BASE_URL = "/api"
 
 export const register = async (username, password) => {
-  try {
-    const { data: user } = await axios.post(`${BASE_URL}/users/register`,{
-      username,
-      password
-    });
-    return user;
-  } catch (error) {
-    throw error;
-  }
+  const { data: user } = await axios.post(`${BASE_URL}/users/register`,{
+    username,
+    password
+  });
+  return user;
 }
 
 export const login = async (username, password) => {
-  try {
-    const { data: {token} } = await axios.post(`${BASE_URL}/users/login`, {
-      username,
-      password
-    });
-    return token;
-  } catch (error) {
-    throw error;
-  }
+  const { data: {token} } = await axios.post(`${BASE_URL}/users/login`, {
+    username,
+    password
+  });
+  return token;
 }
 
 export const createRoutine = async (token, routine) => {
-  try {
-    const { data } = await axios.post(`${BASE_URL}/routines`, routine, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return data;
-  } catch (error) {
-    throw error;
-  }
+  const { data } = await axios.post(`${BASE_URL}/routines`, routine, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  return data;
 }
 
 export const editRoutine = async (token, routine) => {

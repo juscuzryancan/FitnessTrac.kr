@@ -17,14 +17,14 @@ server.use(express.urlencoded({
 
 const path = require("path");
 
-server.use(express.static(path.join(__dirname, "dist")))
 
-const { PORT } = process.env;
+const { PORT = 8080 } = process.env;
 
 server.use('/api', require('./api'));
 
+server.use(express.static(path.join(__dirname, "..", "client", "dist")))
 server.use((req, res, next) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
+  res.sendFile(path.join(__dirname, "..", "client", "dist"));
 })
 
 server.use(({name, message}, req, res, next) => {
