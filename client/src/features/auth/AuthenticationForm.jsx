@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import PropTypes from 'prop-types';
 
 const AuthenticationForm = ({
   type,
@@ -6,7 +7,7 @@ const AuthenticationForm = ({
   isLoading,
   authError
 }) => {
-  const {handleSubmit, register, formState: { errors }} = useForm();
+  const { handleSubmit, register, formState: { errors } } = useForm();
 
   return (
     <form 
@@ -27,7 +28,6 @@ const AuthenticationForm = ({
         />
         {errors.username && <div className="text-red-500">{errors.username.message}</div>}
       </div>
-
       <div className="px-8">
         <label 
           className="self-start text-xl" 
@@ -43,7 +43,6 @@ const AuthenticationForm = ({
         />
         {errors.password && <div className="text-red-500">{errors.password.message}</div>}
       </div>
-
 
       {type === "register" && 
         <div className="px-8">
@@ -67,6 +66,13 @@ const AuthenticationForm = ({
       {authError && <div className="self-center text-red-500">{authError?.response.data.message}</div>}
     </form>
   )
+}
+
+AuthenticationForm.propTypes = {
+  type: PropTypes.string,
+  onSubmit: PropTypes.func,
+  isLoading: PropTypes.bool,
+  authError: PropTypes.object
 }
 
 export default AuthenticationForm;

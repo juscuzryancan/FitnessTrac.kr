@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Activity, EditRoutine } from "./";
+import { EditRoutine } from "./";
+import Activity from '../features/activities/Activity'
 import { useUser } from "../contexts/useUser";
 import { useMutation, useQueryClient } from "react-query";
 import { deleteRoutine } from "../api";
@@ -28,7 +29,7 @@ const Routine = ({
 
   return (
     <>
-      <EditRoutine routine={routine} closeModal={closeModal} showModal={showModal}/>
+      <EditRoutine routine={routine} closeModal={closeModal} showModal={showModal} />
       <div className="border rounded border-black
         p-4"
       >
@@ -41,7 +42,7 @@ const Routine = ({
           </div>
         </div>
         <div className="p-4">
-          {activities?.length === 0 
+          {activities?.length === 0
             ? <div className="text-lg my-2">This Routine currently has no Exercises</div>
             : <div className="text-lg my-2">Exercises</div>}
           <div className="flex flex-col gap-2">
@@ -54,11 +55,11 @@ const Routine = ({
           </div>
         </div>
         {
-          isProfile 
-            && <div className="flex justify-end gap-4 mx-2">
-              <button onClick={openModal} className="border rounded border-black py-2 px-4 bg-blue-200">Edit</button>
-              <button onClick={handleClick} className="border rounded border-black py-2 px-4 bg-red-400">{isLoading ? <Loader/> : "Delete"}</button>
-            </div>
+          isProfile
+          && <div className="flex justify-end gap-4 mx-2">
+            <button onClick={openModal} className="border rounded border-black py-2 px-4 bg-blue-200">Edit</button>
+            <button onClick={handleClick} className="border rounded border-black py-2 px-4 bg-red-400">{isLoading ? <Loader /> : "Delete"}</button>
+          </div>
         }
       </div>
     </>

@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
-import { useUser } from "../contexts/useUser";
-import { getActivities, addActivityToRoutine } from "../api";
+import { useUser } from "../../contexts/useUser";
+const getActivities = () => { }
+const addActivityToRoutine = () => { }
 
 /** 
  * todo: rename to edit the name to addactivitytoroutine ActivitySelect

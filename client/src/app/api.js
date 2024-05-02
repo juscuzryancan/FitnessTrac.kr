@@ -1,8 +1,8 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "/",
+    baseUrl: "/api",
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
       if (token) {
@@ -11,5 +11,6 @@ export const api = createApi({
       return headers;
     },
   }),
+  tagTypes: ['Activities'],
   endpoints: () => ({})
-})
+});

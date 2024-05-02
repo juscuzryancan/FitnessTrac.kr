@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
-import { ActivitySelect } from './';
+import ActivitySelect from "./ActivitySelect";
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const EditActivity = ({activities, handleActivities, token}) => {
+const EditActivity = ({ activities, handleActivities, token }) => {
   const [activity, setActivity] = useState(null);
   const { activityId } = useParams();
   const navigate = useNavigate();
 
   const handleActivity = () => {
     let activityToBeSet;
-    for(let i = 0; i < activities.length; i++) {
-      if(activities[i].id === (activityId * 1)) {
+    for (let i = 0; i < activities.length; i++) {
+      if (activities[i].id === (activityId * 1)) {
         activityToBeSet = activities[i];
       }
     }
@@ -22,7 +22,7 @@ const EditActivity = ({activities, handleActivities, token}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const {data} = await axios.patch(`/api/activities/${activityId}`, activity, {headers: {Authorization: `Bearer ${token}`}});
+      const { data } = await axios.patch(`/api/activities/${activityId}`, activity, { headers: { Authorization: `Bearer ${token}` } });
       if (data.success === false) {
         //TODO:make error handling
         return;
@@ -37,18 +37,18 @@ const EditActivity = ({activities, handleActivities, token}) => {
 
   useEffect(() => {
     handleActivity();
-    }, [activities])
+  }, [activities])
 
-  if(!activity){
+  if (!activity) {
     return (<>hello</>)
   }
 
   return (
     <div className='edit-activity-container'>
       <h2 className='edit-activity-header'>Edit Activity</h2>
-      <ActivitySelect activity={activity} setActivity={setActivity} handleSubmit={handleSubmit}/>
+      <ActivitySelect activity={activity} setActivity={setActivity} handleSubmit={handleSubmit} />
     </div>
-    );
+  );
 }
 
 export default EditActivity;

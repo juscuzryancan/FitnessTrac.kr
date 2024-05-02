@@ -1,62 +1,46 @@
 import { Link } from 'react-router-dom';
-import { useUser } from '../contexts/useUser';
-import { useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
+import { useLogoutMutation } from '../features/auth/authSlice';
 
 const Navbar = () => {
-
-  const { token, clearToken, user } = useUser();
-  const navigate = useNavigate();
+  const [logout] = useLogoutMutation();
+  const isLoggedIn = useSelector((state) => state.auth.token);
 
   return (
-    <nav className="flex justify-between p-4 m-4 ">
-      <div className="flex gap-4 relative items-end">
-        <Link className="text-2xl"
-          to="/"
-        >FitnessTrac.kr</Link>
-        <Link 
-          to="/routines"
-          className="border-transparent border-b-2
-          hover:border-black"
-        >Routines</Link>
-        <Link 
-          className="border-transparent border-b-2
-          hover:border-black"
-          to="/activities"
-        >Activities</Link>
-      </div>
-      {
-        token 
-          ? <div 
-            className="flex gap-4 items-end"
-          >
-            <Link 
-              className="border-transparent border-b-2
-              hover:border-black"
-              to="/profile"
-            >{user?.username}</Link>
-            <button 
-              className="border-transparent border-b-2
-              hover:border-black"
-              onClick={() => {
-                clearToken();
-                navigate("/");
-              }}
-            >Sign Out</button>
-          </div>
-          : <div className="flex gap-4 items-end">
-            <Link 
-              className="border-transparent border-b-2
-              hover:border-black"
-              to="/login"
-            >Login</Link>
-            <Link 
-              className="border-transparent border-b-2
-              hover:border-black"
-              to="/register"
-            >Sign Up</Link>
-          </div>
-      }
-    </nav>
+    <header className="py-8 px-4 lg:px-6 h-14 flex items-center">
+      <Link className="flex items-center justify-center" to="/">
+        <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-[3.75rem] 2xl:text-6xl">
+          Fitness Trackr
+        </h1>
+        <span className="sr-only">
+          Fitness Trackr
+        </span>
+      </Link>
+      <nav className="ml-auto flex gap-4 sm:gap-6">
+        <Link className="text-sm font-medium hover:underline underline-offset-4" to="/activities">
+          Activities
+        </Link>
+        <Link className="text-sm font-medium hover:underline underline-offset-4" to="/routines">
+          Routines
+        </Link>
+        {
+          (isLoggedIn)
+            ? (
+              <>
+                <Link className="text-sm font-medium hover:underline underline-offset-4" to="/profile">
+                  Profile
+                </Link>
+                <button onClick={logout} className="text-sm font-medium hover:underline underline-offset-4">Sign Out</button>
+              </>
+            )
+            : (
+              <Link className="text-sm font-medium hover:underline underline-offset-4" to="/login">
+                Login
+              </Link>
+            )
+        }
+      </nav>
+    </header>
   );
 }
 
